@@ -5,8 +5,8 @@
         buttons="accept,cancel"
         width="475"
         height="350"
-				    onload="return com.dakahler.tp.prefs.tpLoadSettings();"
-				    ondialogaccept="return com.dakahler.tp.prefs.tpSaveSettings();"
+        onload="return com.dakahler.tp.prefs.tpLoadSettings();"
+        ondialogaccept="return com.dakahler.tp.prefs.tpSaveSettings();"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
  <script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js" />

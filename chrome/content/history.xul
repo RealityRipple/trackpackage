@@ -8,18 +8,18 @@
         minwidth="560"
         minheight="150"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js"/>
-	<script type="application/x-javascript" src="chrome://trackpackage/content/history.js"/>
+ <script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js"/>
+ <script type="application/x-javascript" src="chrome://trackpackage/content/history.js"/>
  <popupset>
-  <menupopup id="historyMenu">
-   <menuitem label="Track Selected" onclick="com.dakahler.tp.history.tpHistoryTrack()" />
+  <menupopup id="historyMenu" onpopupshowing="return com.dakahler.tp.history.tpDeleteTextUpdate()">
+   <menuitem label="Track Selected" onclick="com.dakahler.tp.history.tpHistoryTrack()" default="true" />
    <menuseparator id="historyMenuSpace" />
-   <menuitem label="Delete Tracking Number(s)" onclick="com.dakahler.tp.history.tpHistoryDelete()" />
+   <menuitem id="historyMenuDel" label="Delete Tracking Number(s)" onclick="com.dakahler.tp.history.tpHistoryDelete()" />
    <menuitem label="Clear Tracking History" onclick="com.dakahler.tp.history.tpClearHistory()" />
   </menupopup>
  </popupset>
  <vbox flex="1" style="overflow:auto">
-		<listbox id="historyListbox" seltype="multiple" flex="1" onkeydown="com.dakahler.tp.history.tpHistoryKeyDown(event)" context="historyMenu">
+  <listbox id="historyListbox" seltype="multiple" flex="1" onkeydown="com.dakahler.tp.history.tpHistoryKeyDown(event)" context="historyMenu">
    <listhead>
     <listheader label="Carrier" />
     <listheader label="Tracking Number" />
@@ -31,15 +31,15 @@
     <listcol width="140" />
     <listcol width="220" />
     <listcol width="80" />
-    <listcol flex="1" />
+    <listcol flex="1" id="historyListLabel" />
     <listcol width="42" />
    </listcols>
   </listbox>
-		<hbox id="buttonhbox">
-			<button label="Clear Tracking History" onclick="com.dakahler.tp.history.tpClearHistory()" style="width: 170px; height: 30px;"/>
-			<button label="Options" onclick="com.dakahler.tp.history.tpOpenHistoryOptions()" style="width: 110px; height: 30px;"/>
-			<spacer flex="1"/>
-			<button label="Track Selected" onclick="com.dakahler.tp.history.tpHistoryTrack()" style="width: 120px; height: 30px;"/>
-		</hbox>
-	</vbox>
+  <hbox id="buttonhbox">
+   <button label="Clear Tracking History" onclick="com.dakahler.tp.history.tpClearHistory()" style="width: 170px; height: 30px;"/>
+   <button label="Options" onclick="com.dakahler.tp.history.tpOpenHistoryOptions()" style="width: 110px; height: 30px;"/>
+   <spacer flex="1"/>
+   <button label="Track Selected" onclick="com.dakahler.tp.history.tpHistoryTrack()" style="width: 120px; height: 30px;"/>
+  </hbox>
+ </vbox>
 </window>
