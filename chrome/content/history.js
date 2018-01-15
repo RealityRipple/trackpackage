@@ -145,23 +145,22 @@ com.dakahler.tp.history = {
 					
 					cell.setAttribute('label', rowArray[cellIndex] );
 					row.appendChild( cell );
+     cell.addEventListener("dblclick",com.dakahler.tp.history.tpHistoryTrack,true);
 				}
 				else
 				{
 					// Special case for user-editable "Info" field
 					var infoCell = document.createElement('textbox');
-					infoCell.setAttribute('allowevents',true);
 					
 					if (rowArray[cellIndex] != undefined)
 						infoCell.setAttribute('value', rowArray[cellIndex] );
 					else
 						infoCell.setAttribute('value', "" );
-
+     infoCell.setAttribute('clickSelectsAll', true);
 					row.appendChild( infoCell );
 				}
 			}
    var buttonCell = document.createElement('button');
-   buttonCell.setAttribute('allowevents', true);
    buttonCell.setAttribute('label', "X");
    buttonCell.addEventListener("click", com.dakahler.tp.history.tpHistoryDelete, true);
    
@@ -169,9 +168,28 @@ com.dakahler.tp.history = {
 			
 			document.getElementById("historyListbox").appendChild( row );
 			
-			row.addEventListener("dblclick",com.dakahler.tp.history.tpHistoryTrack,true);
 		}
 	},
+ 
+ onResizeHistory: function(e)
+ {
+  var myListbox = document.getElementById("historyListbox");
+  var listC = myListbox.childNodes;
+  for (var i = 0; i < listC.length; i++)
+  {
+   var listSC = listC[i].childNodes;
+   for (var j = 0; j < listSC.length; j++)
+   {
+    if (listSC[j].tagName == 'listcol')
+    {
+     if (listSC[j].flex == 1)
+      listSC[j].flex = 2;
+     if (listSC[j].flex == 2)
+      listSC[j].flex = 1;
+    }
+   }
+  }
+ },
 
 	tpHistoryKeyDown: function(e)
 	{

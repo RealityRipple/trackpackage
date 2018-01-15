@@ -4,6 +4,9 @@
         title="Tracking History"
         orient="horizontal"
         onclose="com.dakahler.tp.history.onCloseHistory()"
+        onresize="com.dakahler.tp.history.onResizeHistory()"
+        minwidth="560"
+        minheight="150"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	<script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js"/>
 	<script type="application/x-javascript" src="chrome://trackpackage/content/history.js"/>
@@ -22,14 +25,14 @@
     <listheader label="Tracking Number" />
     <listheader label="Date" />
     <listheader label="Notes" />
-    <listheader label="Delete" />
+    <listheader label="" />
    </listhead>
    <listcols>
-    <listcol width="140" height="400" />
-    <listcol width="220" height="400" />
-    <listcol width="80" height="400" />
-    <listcol flex="1" width="270" height="400" />
-    <listcol width="50" height="400" />
+    <listcol width="140" />
+    <listcol width="220" />
+    <listcol width="80" />
+    <listcol flex="1" />
+    <listcol width="42" />
    </listcols>
   </listbox>
 		<hbox id="buttonhbox">
