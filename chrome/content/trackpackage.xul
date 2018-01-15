@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+
+<!-- Image locations definitions file for toolbar icon -->
+<?xml-stylesheet type="text/css" href="chrome://trackpackage/content/tpButton.css"?>
+
+<!-- Track Package Extension overlay -->
+<overlay id="TrackPackageOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js"/>
+	<script type="application/x-javascript" src="chrome://trackpackage/content/trackpackage.js"/>
+
+	<!-- Firefox 'Tools' menu bar 'Tracking History...' option -->
+	<menupopup id="menu_ToolsPopup">
+		<menuitem	label       = "Tracking History..."
+					insertafter = "devToolsSeparator"
+					oncommand   = "com.dakahler.tp.functionLib.tpOpenHistory();"    />
+
+	</menupopup>
+
+	<!-- Thunderbird 'Tools' menu bar 'Tracking History...' option -->
+	<menupopup id="taskPopup">
+		<menuitem	label       = "Tracking History..."
+					insertafter = "devToolsSeparator"
+					oncommand   = "com.dakahler.tp.functionLib.tpOpenHistory();"    />
+	</menupopup>
+
+	<!-- Firefox toolbar icon -->
+	<toolbarpalette id="BrowserToolbarPalette">
+		<toolbarbutton	label		= "Add Tracking Links"
+						id			= "tpbutton"
+						tooltiptext	= "Link all tracking numbers"
+						class		= "toolbarbutton-1"
+						oncommand	= "com.dakahler.tp.main.tpLinkNumbers();"	/>
+	</toolbarpalette>
+
+	<!-- Firefox toolbar menu -->
+	<toolbarpalette id="BrowserToolbarPalette">
+		<toolbaritem id="tphistorydropdown" class="chromeclass-toolbar-additional" height="33">
+				<button	label		= "Tracking History"
+								type		= "menu-button"
+								id			= "tpbuttonmenu"
+								tooltiptext	= "Track"
+								width = "250"
+								class		= "chromeclass-toolbar-additional"
+								oncommand	= "com.dakahler.tp.main.tpButtonMenuPressed(event.target);"
+								onload = "if (typeof(com) !== 'undefined') com.dakahler.tp.main.tpButtonMenuLoaded();">
+
+					<menupopup id="toolbarMenuPopup">
+					</menupopup>
+
+				</button>
+		</toolbaritem>
+	</toolbarpalette>
+
+	<!-- Thunderbird toolbar icon -->
+	<toolbarpalette id="MailToolbarPalette">
+		<toolbarbutton	label		= "Add Tracking Links"
+						id			= "tpbutton"
+						tooltiptext	= "Link all tracking numbers"
+						class		= "toolbarbutton-1"
+						oncommand	= "com.dakahler.tp.main.tpLinkNumbers();"	/>
+	</toolbarpalette>
+
+	<!-- Thunderbird toolbar menu -->
+	<toolbarpalette id="MailToolbarPalette">
+		<toolbaritem id="tphistorydropdown" class="chromeclass-toolbar-additional" height="33">
+			<button	label		= "Tracking History"
+							type		= "menu-button"
+							id			= "tpbuttonmenu"
+							tooltiptext	= "Track"
+							width = "250"
+							class		= "chromeclass-toolbar-additional"
+							oncommand	= "com.dakahler.tp.main.tpButtonMenuPressed(event.target);"
+							onload = "if (typeof(com) !== 'undefined') com.dakahler.tp.main.tpButtonMenuLoaded();">
+
+				<menupopup id="toolbarMenuPopup">
+				</menupopup>
+
+			</button>
+		</toolbaritem>
+	</toolbarpalette>
+
+
+	<!-- Firefox context menu 'Track Package' option -->
+	<popup id="contentAreaContextMenu">
+		<menuitem	id			= "trackpackage"
+					label		= "Track Package"
+					oncommand	= "com.dakahler.tp.functionLib.tpTrackPackage();"	/>
+
+		<!-- Firefox context menu explicit tracking menu branch -->
+		<menu id="trackpackage_explicitmenu"
+			  label="Track Package">
+			
+			<menupopup id = "trackpackage_explicitpopup"		/>
+			
+		</menu>
+	</popup>
+
+	<!-- Thunderbird message pane context menu 'Track Package' option -->
+	<popup id="messagePaneContext">
+		<menuitem	id			= "trackpackage"
+					label		= "Track Package"
+					oncommand	= "com.dakahler.tp.functionLib.tpTrackPackage();"	/>
+
+		<!-- Thunderbird message pane context menu explicit tracking menu branch -->
+		<menu id	= "trackpackage_explicitmenu"
+			  label	= "Track Package">
+			
+			<menupopup id = "trackpackage_explicitpopup" />
+			
+		</menu>
+	</popup>
+	
+	<!-- Thunderbird 3 message pane context menu 'Track Package' option -->
+	<popup id="mailContext">
+		<menuitem	id			= "trackpackage"
+					label		= "Track Package"
+					oncommand	= "com.dakahler.tp.functionLib.tpTrackPackage();"	/>
+
+		<!-- Thunderbird message pane context menu explicit tracking menu branch -->
+		<menu id	= "trackpackage_explicitmenu"
+			  label	= "Track Package">
+			
+			<menupopup id = "trackpackage_explicitpopup" />
+			
+		</menu>
+	</popup>
+	
+	<!-- Thunderbird 3 compose pane context menu 'Track Package' option -->
+	<popup id="msgComposeContext">
+		<menuitem	id			= "trackpackage"
+					label		= "Track Package"
+					oncommand	= "com.dakahler.tp.functionLib.tpTrackPackage();"	/>
+
+		<!-- Thunderbird message pane context menu explicit tracking menu branch -->
+		<menu id	= "trackpackage_explicitmenu"
+			  label	= "Track Package">
+			
+			<menupopup id = "trackpackage_explicitpopup" />
+			
+		</menu>
+	</popup>
+
+</overlay>

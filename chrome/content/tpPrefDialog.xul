@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<dialog id="tp_settings_dialog"
+        title="Track Package Settings"
+        buttons="accept,cancel"
+        width="475"
+        height="350"
+				    onload="return com.dakahler.tp.prefs.tpLoadSettings();"
+				    ondialogaccept="return com.dakahler.tp.prefs.tpSaveSettings();"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml">
+ <script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js" />
+ <script type="application/x-javascript" src="chrome://trackpackage/content/tpPrefDialog.js" />
+ <tabbox flex="1">
+  <tabs>
+   <tab label="General" />
+   <tab label="Tracking Number Detections" />
+   <tab label="Service URLs" />
+   <tab label="Google Maps" />
+   <tab label="Import/Export" />
+  </tabs>
+  <tabpanels flex="1">
+   <tabpanel id="generalTab" orient="vertical" flex="1">
+    <vbox flex="1">
+     <groupbox>
+      <caption label="Interface" />
+      <vbox>
+       <checkbox id="tpCheckBox" label="Open Tracking Page in a New Tab Instead of a New Window" checked="false" />
+       <checkbox id="tpNotifications" label="Offer Carrier Correction Notifications" checked="false" />
+       <checkbox id="tpUseThunderbrowse" label="Use Thunderbrowse if available" checked="false" />
+       <hbox flex="1" align="center">
+        <label value="Maximum Tracking Numbers in Toolbar Dropdown Menu:" control="tpMaxDropdownItems" />
+        <textbox id="tpMaxDropdownItems" style="width: 40px; text-align: right;" type="number" min="1" max="25" />
+       </hbox>
+      </vbox>
+     </groupbox>
+     <spacer flex="1" />
+     <groupbox>
+      <caption label="Functionality" />
+      <vbox>
+       <checkbox id="tpSmartSense" label="Auto-Detect Service" checked="false"/>
+       <checkbox id="tpPrivateBrowsing" label="Don't Save Tracking Numbers when in Private Browsing Mode" checked="false"/>
+       <hbox flex="1" align="center">
+        <label value="Maximum Tracking Numbers to Save:" control="tpMaxNumbers"/>
+        <textbox id="tpMaxNumbers" style="width: 40px; text-align: right;" type="number" min="1" max="99" />
+       </hbox>
+      </vbox>
+     </groupbox>
+    </vbox>
+   </tabpanel>
+   <tabpanel id="regexTab" orient="vertical" flex="1">
+    <vbox flex="1">
+     <listbox id="regexListbox" seltype="multiple" flex="1">
+      <listhead>
+       <listheader label="Carrier" />
+       <listheader label="Regular Expression" />
+      </listhead>
+      <listcols>
+       <listcol width="75" />
+       <listcol flex="1" />
+      </listcols>
+     </listbox>
+     <spacer height="5" />
+     <hbox>
+      <button label="Add RegEx Detection" onclick="com.dakahler.tp.prefs.tpAddNewRegex()" style="width: 150px; height: 20px;" />
+      <button label="Remove Detection" onclick="com.dakahler.tp.prefs.tpDeleteRegex()" style="width: 120px; height: 20px;" />
+      <spacer flex="1" />
+      <button label="Reset To Defaults" onclick="com.dakahler.tp.prefs.tpResetRegexDefaults()" style="width: 120px; height: 20px;" />
+     </hbox>
+    </vbox>
+   </tabpanel>
+   <tabpanel id="urlTab" orient="vertical" flex="1">
+    <vbox flex="1">
+     <listbox id="urlListbox" seltype="multiple" flex="1">
+      <listhead>
+       <listheader label="Carrier" />
+       <listheader label="URL Prefix" />
+       <listheader label="URL Suffix" />
+      </listhead>
+      <listcols>
+       <listcol width="75" />
+       <listcol flex="5" />
+       <listcol flex="3" />
+      </listcols>
+     </listbox>
+     <spacer height="5" />
+     <hbox>
+      <button label="Add Service URL" onclick="com.dakahler.tp.prefs.tpAddNewURL()" style="width: 150px; height: 20px;" />
+      <button label="Remove Service" onclick="com.dakahler.tp.prefs.tpDeleteURL()" style="width: 120px; height: 20px;" />
+      <spacer flex="1" />
+      <button label="Reset To Defaults" onclick="com.dakahler.tp.prefs.tpResetURLDefaults()" style="width: 120px; height: 20px;" />
+     </hbox>
+    </vbox>
+   </tabpanel>
+   <tabpanel id="gmapsTab" orient="vertical" flex="1">
+    <vbox flex="1">
+     <hbox>
+      <checkbox id="tpEnableGMaps" label="Enable Google Maps Option (Requires Restart)" checked="false"/>
+     </hbox>
+     <spacer flex="1" />
+     <hbox>
+      <textbox id="mapsdisclaimer" flex="1" rows="5" multiline="true" readonly="true" value="Disclaimer: The website PackageMapping.com (used in this feature) is not maintained by the author of Track Package. By using this feature, you agree to absolve the author of this extension from any issues involved with the PackageMapping.com website. Please read the Privacy Policy at PackageMapping.com before sending it any data you consider to be private (e.g. a tracking number). For PackageMapping.com support, see the Contact page at that website. For support regarding redirection to PackageMapping.com via the Track Package extension, contact the author of the extension."/>
+     </hbox>
+     <spacer flex="1" />
+    </vbox>
+   </tabpanel>
+   <tabpanel id="updaterTab" orient="vertical" flex="1">
+    <vbox flex="1">
+     <label value="Tracking Number and Service URL Definitions:" control="tpUpdateURL"/>
+     <hbox>
+      <textbox id="tpUpdateURL" flex="1" />
+      <button label="Update" onclick="com.dakahler.tp.prefs.tpUpdateDefs()" style="width: 75px; height: 20px;"/>
+     </hbox>
+     <spacer height="30" />
+     <hbox>
+      <spacer flex="1" />
+      <button label="Export XML..." onclick="com.dakahler.tp.prefs.tpSaveXML()" style="width: 100px; height: 20px;"/>
+     </hbox>
+    </vbox>
+   </tabpanel>
+  </tabpanels>
+ </tabbox>
+</dialog>
