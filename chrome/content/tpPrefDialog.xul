@@ -62,10 +62,10 @@
      </listbox>
      <spacer height="5" />
      <hbox>
-      <button label="Add RegEx Detection" onclick="com.dakahler.tp.prefs.tpAddNewRegex()" style="width: 150px; height: 20px;" />
-      <button label="Remove Detection" onclick="com.dakahler.tp.prefs.tpDeleteRegex()" style="width: 120px; height: 20px;" />
+      <button label="Add RegEx Detection" onclick="com.dakahler.tp.prefs.tpAddNewRegex()" style="width: 150px;" />
+      <button label="Remove Detection" onclick="com.dakahler.tp.prefs.tpDeleteRegex()" style="width: 120px;" />
       <spacer flex="1" />
-      <button label="Reset To Defaults" onclick="com.dakahler.tp.prefs.tpResetRegexDefaults()" style="width: 120px; height: 20px;" />
+      <button label="Reset To Defaults" onclick="com.dakahler.tp.prefs.tpResetRegexDefaults()" style="width: 120px;" />
      </hbox>
     </vbox>
    </tabpanel>
@@ -85,10 +85,10 @@
      </listbox>
      <spacer height="5" />
      <hbox>
-      <button label="Add Service URL" onclick="com.dakahler.tp.prefs.tpAddNewURL()" style="width: 150px; height: 20px;" />
-      <button label="Remove Service" onclick="com.dakahler.tp.prefs.tpDeleteURL()" style="width: 120px; height: 20px;" />
+      <button label="Add Service URL" onclick="com.dakahler.tp.prefs.tpAddNewURL()" style="width: 150px;" />
+      <button label="Remove Service" onclick="com.dakahler.tp.prefs.tpDeleteURL()" style="width: 120px;" />
       <spacer flex="1" />
-      <button label="Reset To Defaults" onclick="com.dakahler.tp.prefs.tpResetURLDefaults()" style="width: 120px; height: 20px;" />
+      <button label="Reset To Defaults" onclick="com.dakahler.tp.prefs.tpResetURLDefaults()" style="width: 120px;" />
      </hbox>
     </vbox>
    </tabpanel>
@@ -109,12 +109,12 @@
      <label value="Tracking Number and Service URL Definitions:" control="tpUpdateURL"/>
      <hbox>
       <textbox id="tpUpdateURL" flex="1" />
-      <button label="Update" onclick="com.dakahler.tp.prefs.tpUpdateDefs()" style="width: 75px; height: 20px;"/>
+      <button label="Update" onclick="com.dakahler.tp.prefs.tpUpdateDefs()" />
      </hbox>
      <spacer height="30" />
      <hbox>
       <spacer flex="1" />
-      <button label="Export XML..." onclick="com.dakahler.tp.prefs.tpSaveXML()" style="width: 100px; height: 20px;"/>
+      <button label="Export XML..." onclick="com.dakahler.tp.prefs.tpSaveXML()" />
      </hbox>
     </vbox>
    </tabpanel>
