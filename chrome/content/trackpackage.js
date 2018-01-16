@@ -7,18 +7,18 @@ com.dakahler.tp.main =
 {
  observe: function(subject, topic, data)
  {
-  if (topic == "nsPref:changed")
+  if (topic == "nsPref:changed" && data == "tpMaxDropdownItems")
   {
-   if (data == "tpMaxDropdownItems")
-   {
-    com.dakahler.tp.functionLib.tpRebuildDropdown();
-   }
+   com.dakahler.tp.functionLib.tpRebuildDropdown();
   }
-  subject = subject.QueryInterface(Components.interfaces.nsIUpdateItem);
-  if (subject.name == "Track Package" && data == "item-uninstalled")
+  if (data == "item-uninstalled")
   {
-   var myTPPrefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage.");
-   myTPPrefs.deleteBranch("");
+   subject = subject.QueryInterface(Components.interfaces.nsIUpdateItem);
+   if (subject.name == "Track Package")
+   {
+    var myTPPrefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage.");
+    myTPPrefs.deleteBranch("");
+   }
   }
  },
  register: function()
@@ -173,6 +173,8 @@ com.dakahler.tp.main =
     }
    }
   }
+  if (tempArray.length == 0)
+   return;
   var newlist  = new Array();
   var newIndex = 0;
   for (var index = 0; index < tempArray.length; index++)
@@ -195,6 +197,8 @@ com.dakahler.tp.main =
     newIndex++;
    }
   }
+  if (newlist.length == 0)
+   return;
   for (var index = 0; index < newlist.length; index++)
   {
    var regexp = "";
@@ -242,6 +246,10 @@ com.dakahler.tp.main =
    var trackingString = target.historyInfo['TrackingNumber'];
    var title = carrier + ": " + trackingString;
    com.dakahler.tp.functionLib.tpOpenPackageWindow(com.dakahler.tp.functionLib.tpGetPackageURL(carrier, trackingString, false), false, false, title);
+  }
+  else
+  {
+   com.dakahler.tp.functionLib.tpOpenHistory();
   }
  },
  tpButtonMenuLoaded: function()

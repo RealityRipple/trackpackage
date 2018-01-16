@@ -27,7 +27,7 @@ com.dakahler.tp.history =
    historyString = myTPPrefs.getCharPref("tpTrackingHistory");
   var historyArray = com.dakahler.tp.history.tpBuildHistoryArray(historyString);
   com.dakahler.tp.history.tpPopulateListBox(historyArray);
-  if (com.dakahler.tp.functionLib.tpGetGMapsSetting())
+  if (com.dakahler.tp.functionLib.tpGetGMapsSetting() && (document.getElementById("mapButton") == undefined))
   {
    var menuitem = document.createElement('button');
    menuitem.setAttribute('id',"mapButton");
@@ -76,6 +76,12 @@ com.dakahler.tp.history =
  },
  tpPopulateListBox: function(historyArray)
  {
+  var listBox = document.getElementById("historyListbox");
+  var numElements = listBox.getRowCount();
+  for (var index = 0; index < numElements; index++)
+  {
+   listBox.removeItemAt(0);
+  }
   for (var index = 0; index < historyArray.length; index++)
   {
    var rowString = historyArray[index];
@@ -130,7 +136,7 @@ com.dakahler.tp.history =
    buttonCell.setAttribute('label', "X");
    buttonCell.addEventListener("click", com.dakahler.tp.history.tpHistoryDelete, true);
    row.appendChild(buttonCell);
-   document.getElementById("historyListbox").appendChild( row );
+   listBox.appendChild(row);
   }
  },
  onResizeHistory: function(e)
@@ -172,7 +178,7 @@ com.dakahler.tp.history =
      if (info == '')
       trackID = carrier + ' ' + trackingString;
      else
-      trackID = info + ' [' + carrier + ' ' + trackingString + ']';
+      trackID = info + ' [' + carrier + ': ' + trackingString + ']';
      sConfirm = "Are you sure you want to delete the selected Tracking Number?";
      if (trackID != '')
       sConfirm = "Are you sure you want to delete " + trackID + "?";
@@ -205,7 +211,7 @@ com.dakahler.tp.history =
      if (info == '')
       trackID = carrier + ' ' + trackingString;
      else
-      trackID = info + ' [' + carrier + ' ' + trackingString + ']';
+      trackID = info + ' [' + carrier + ': ' + trackingString + ']';
      sConfirm = "Are you sure you want to delete the selected Tracking Number?";
      if (trackID != '')
       sConfirm = "Are you sure you want to delete " + trackID + "?";
@@ -232,7 +238,7 @@ com.dakahler.tp.history =
     if (info == '')
      trackID = carrier + ' ' + trackingString;
     else
-     trackID = info + ' [' + carrier + ' ' + trackingString + ']';
+     trackID = info + ' [' + carrier + ': ' + trackingString + ']';
     var sConfirm = "Are you sure you want to delete this Tracking Number?";
     if (trackID != '')
      sConfirm = "Are you sure you want to delete " + trackID + "?";
@@ -333,7 +339,9 @@ com.dakahler.tp.history =
  },
  tpOpenHistoryOptions: function()
  {
-  window.open("chrome://trackpackage/content/tpPrefDialog.xul", "prefdialog", "chrome,screenX=150,screenY=150").focus();
+  var win = window.open("chrome://trackpackage/content/tpPrefDialog.xul", "prefdialog", "chrome,screenX=150,screenY=150");
+  win.focus();
+  win.onunload = com.dakahler.tp.history.tpHistoryInit;
  }
 }
 window.addEventListener("load",com.dakahler.tp.history.tpHistoryInit,false);

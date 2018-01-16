@@ -76,11 +76,11 @@ com.dakahler.tp.prefs =
   if (com.dakahler.tp.prefs.tpPrefs.prefHasUserValue("tpURL"))
    urlArray = com.dakahler.tp.prefs.tpPrefs.getCharPref("tpURL").split(";");
   var urlListbox = document.getElementById("urlListbox");
-  for (var i=0;i<urlArray.length;i++)
+  for (var i = 0; i < urlArray.length; i++)
   {
    var carrierURL = com.dakahler.tp.functionLib.tpExtractQuotedStrings(urlArray[i]);
    if (carrierURL == "")
-    return;
+    continue;
    var newCarrierField  = document.createElement("textbox");
    var newURLFrontField = document.createElement("textbox");
    var newURLBackField  = document.createElement("textbox");
@@ -110,38 +110,58 @@ com.dakahler.tp.prefs =
   com.dakahler.tp.prefs.tpPrefs.setIntPref("tpMaxDropdownItems", document.getElementById("tpMaxDropdownItems").value);
   com.dakahler.tp.prefs.tpPrefs.setBoolPref("tpEnableGMaps", document.getElementById("tpEnableGMaps").checked);
   com.dakahler.tp.prefs.tpPrefs.setCharPref("tpUpdateURL", document.getElementById("tpUpdateURL").value);
-  var myListbox = document.getElementById("regexListbox");
-  var regexPrefArray = new Array();
+  var myRegListbox      = document.getElementById("regexListbox");
+  var regexPrefArray    = new Array();
   var regexCarrierArray = new Array();
-  for (var index = 0; index < myListbox.getRowCount(); index++)
+  var regCount          = myRegListbox.getRowCount();
+  for (var index = 0; index < regCount; index++)
   {
-   var item    = myListbox.getItemAtIndex(index);
+   var item    = myRegListbox.getItemAtIndex(index);
    var nodes   = item.childNodes;
    var carrier = nodes.item(0).value;
+   if (carrier == undefined)
+    carrier    = nodes.item(0).getAttribute("value");
    var regex   = nodes.item(1).value;  
+   if (regex   == undefined)
+    regex      = nodes.item(1).getAttribute("value");
    regexPrefArray[regexPrefArray.length] = "\"" + carrier + "\"" + "," + "\"" + regex + "\"";
    regexCarrierArray[regexCarrierArray.length] = carrier;
   }
-  var regexPref = regexPrefArray.join(";");
-  myListbox = document.getElementById("urlListbox");
+  var regexPref       = regexPrefArray.join(";");
+  var myURLListbox    = document.getElementById("urlListbox");
   var urlPrefArray    = new Array();
   var urlCarrierArray = new Array();
-  for (var index = 0; index < myListbox.getRowCount(); index++)
+  var urlCount        = myURLListbox.getRowCount()
+  for (var index = 0; index < urlCount; index++)
   {
-   var item     = myListbox.getItemAtIndex(index);
+   var item     = myURLListbox.getItemAtIndex(index);
    var nodes    = item.childNodes;
    var carrier  = nodes.item(0).value;
+   if (carrier  == undefined)
+    carrier     = nodes.item(0).getAttribute("value");
    var urlFront = nodes.item(1).value;
+   if (urlFront == undefined)
+    urlFront    = nodes.item(1).getAttribute("value");
    var urlBack  = nodes.item(2).value;
+   if (urlBack  == undefined)
+    urlBack     = nodes.item(2).getAttribute("value");
+   if (carrier == undefined)
+    continue;
    urlPrefArray[urlPrefArray.length] = "\"" + carrier + "\"" + "," + "\"" + urlFront + "\"" + "," + "\"" + urlBack + "\"";
    urlCarrierArray[urlCarrierArray.length] = carrier;
   }
   var urlPref = urlPrefArray.join(";");
-  for (var i = 0; i < regexCarrierArray.length; i++)
+  regCount = regexCarrierArray.length;
+  urlCount = urlCarrierArray.length;
+  for (var i = 0; i < regCount; i++)
   {
+   if (regexCarrierArray[i] == undefined || regexCarrierArray[i] == "")
+    continue;
    var foundMatch = false;
-   for (var j = 0; j < urlCarrierArray.length; j++)
+   for (var j = 0; j < urlCount; j++)
    {
+    if (urlCarrierArray[j] == undefined || urlCarrierArray[j] == "")
+     continue;
     if (regexCarrierArray[i].toLowerCase() == urlCarrierArray[j].toLowerCase())
     {
      foundMatch=true;
@@ -150,7 +170,7 @@ com.dakahler.tp.prefs =
    }
    if (!foundMatch)
    {
-    alert("Service URL match for Tracking Number Detection not found for Carrier " + regexCarrierArray[i] + "!");
+    alert("Please make sure an entry for Carrier \"" + regexCarrierArray[i] + "\" is included in the Service URLs list!\nIf a carrier is listed in the Tracking Number Detections list, it must have a valid Service URL.");
     return false;
    }
   }
@@ -205,7 +225,7 @@ com.dakahler.tp.prefs =
   com.dakahler.tp.prefs.tpPrefs.setCharPref("tpRegex", com.dakahler.tp.functionLib.regexDefaults);
   var regexListbox = document.getElementById("regexListbox");
   var numElements = regexListbox.getRowCount();
-  for (var index = 0;index < numElements; index++)
+  for (var index = 0; index < numElements; index++)
   {
    regexListbox.removeItemAt(0);
   }
@@ -231,7 +251,7 @@ com.dakahler.tp.prefs =
   com.dakahler.tp.prefs.tpPrefs.setCharPref("tpURL", com.dakahler.tp.functionLib.URLDefaults);
   var urlListbox  = document.getElementById("urlListbox");
   var numElements = urlListbox.getRowCount();
-  for (var index = 0;index < numElements; index++)
+  for (var index = 0; index < numElements; index++)
   {
    urlListbox.removeItemAt(0);
   }

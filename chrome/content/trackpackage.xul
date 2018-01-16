@@ -22,7 +22,7 @@
         type="menu-button"
         id="tpbuttonmenu"
         tooltiptext="Track"
-        width="250"
+        minwidth="125"
         class="chromeclass-toolbar-additional"
         oncommand="com.dakahler.tp.main.tpButtonMenuPressed(event.target);"
         onload="if (typeof(com) !== 'undefined') com.dakahler.tp.main.tpButtonMenuLoaded();">
@@ -44,7 +44,7 @@
        type="menu-button"
        id="tpbuttonmenu"
        tooltiptext="Track"
-       width="250"
+       minwidth="125"
        class="chromeclass-toolbar-additional"
        oncommand="com.dakahler.tp.main.tpButtonMenuPressed(event.target);"
        onload="if (typeof(com) !== 'undefined') com.dakahler.tp.main.tpButtonMenuLoaded();">

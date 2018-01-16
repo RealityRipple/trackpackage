@@ -268,7 +268,7 @@ com.dakahler.tp.functionLib =
    if (regexURLArray[i][1] == "" && carrier.length == 0)
     continue;
    var regex = new RegExp(regexURLArray[i][1],"gi");
-   if ((carrier.length == 0 && regex.test(trackingString)) || (carrier == regexURLArray[i][0]))
+   if ((carrier.length == 0 && regex.test(trackingString)) || (carrier.toLowerCase() == regexURLArray[i][0].toLowerCase()))
    {
     carrier = regexURLArray[i][0];
     windowURL = regexURLArray[i][2] + trackingString + regexURLArray[i][3];
@@ -433,7 +433,7 @@ com.dakahler.tp.functionLib =
    var foundRegexMatch = false;
    for (var j = 0; j < finalArray.length; j++)
    {
-    if (finalArray[j][0] == carrierURL[0])
+    if (finalArray[j][0].toLowerCase() == carrierURL[0].toLowerCase())
     {
      finalArray[j][2] = carrierURL[1];
      finalArray[j][3] = carrierURL[2];
@@ -528,9 +528,44 @@ com.dakahler.tp.functionLib =
    if (myTPPrefs.prefHasUserValue("tpMaxDropdownItems"))
     maxNumbersAllowed = myTPPrefs.getIntPref("tpMaxDropdownItems");
    var tempArray = com.dakahler.tp.functionLib.tpGetHistoryArray();
+   if (tempArray.length == 0)
+   {
+    buttonMenu.type = "button";
+    var menuitem = document.createElement('menuitem');
+    menuitem.setAttribute('label', "Tracking History");
+    buttonMenu.label = "";
+    buttonMenu.appendChild(menuitem);
+    buttonMenu.minwidth = 125;
+    return;
+   }
+   buttonMenu.minwidth = 250;
+   if (tempArray.length == 1)
+    buttonMenu.type = "button";
+   else
+    buttonMenu.type = "menu-button";
    for (var index = 0; index < tempArray.length; index++)
    {
     var myLabel = tempArray[index].Carrier + ": " + tempArray[index].TrackingNumber;
+    var uniqueNote = true;
+    if (tempArray[index].Notes == undefined || tempArray[index].Notes == "")
+     uniqueNote = false;
+    else
+    {
+     for (var idx = 0; idx < tempArray.length; idx++)
+     {
+      if (idx == index)
+       continue;
+      if (tempArray[idx].Notes == undefined || tempArray[idx].Notes == "")
+       continue;
+      if (tempArray[index].Notes.toLowerCase() == tempArray[idx].Notes.toLowerCase())
+      {
+       uniqueNote = false;
+       break;
+      }
+     }
+    }
+    if (uniqueNote)
+     myLabel = tempArray[index].Notes;
     var menuitem = document.createElement('menuitem');
     menuitem.setAttribute('label', myLabel);
     menuitem.historyInfo = tempArray[index];
