@@ -1,4 +1,4 @@
-pref("extensions.{AF1AD85E-20B4-517C-9A93-B3E51B6EB86F}.description", "chrome://trackpackage/locale/trackpackage.properties");
+pref("extensions.{32C0E919-16F4-5571-840D-D3F952999437}.description", "chrome://trackpackage/locale/trackpackage.properties");
 pref("extensions.trackpackage.tpCheckBox", true);
 pref("extensions.trackpackage.tpSmartSense", true);
 pref("extensions.trackpackage.tpNotifications", true);
