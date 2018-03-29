@@ -11,8 +11,9 @@
  <script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js"/>
  <script type="application/x-javascript" src="chrome://trackpackage/content/history.js"/>
  <popupset>
-  <menupopup id="historyMenu" onpopupshowing="return com.dakahler.tp.history.tpDeleteTextUpdate()">
+  <menupopup id="historyMenu" onpopupshowing="return com.dakahler.tp.history.tpTextUpdate()">
    <menuitem label="Track Selected" onclick="com.dakahler.tp.history.tpHistoryTrack()" default="true" />
+   <menuitem id="historyMenuCopy" label="Copy Tracking Number" onclick="com.dakahler.tp.history.tpCopyNumber()" />
    <menuseparator id="historyMenuSpace" />
    <menuitem id="historyMenuDel" label="Delete Tracking Number(s)" onclick="com.dakahler.tp.history.tpHistoryDelete()" />
    <menuitem label="Clear Tracking History" onclick="com.dakahler.tp.history.tpClearHistory()" />

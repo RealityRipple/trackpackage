@@ -147,16 +147,23 @@ com.dakahler.tp.history =
   else if (listCol.flex == 2)
    listCol.flex = 1;
  },
- tpDeleteTextUpdate: function(e)
+ tpTextUpdate: function(e)
  {
   var myListbox = document.getElementById("historyListbox");
   if (myListbox.selectedIndex == -1)
    return false;
-  var mnuItem = document.getElementById("historyMenuDel");
+  var mnuCopyItem = document.getElementById("historyMenuCopy");
+  var mnuDelItem = document.getElementById("historyMenuDel");
   if (myListbox.selectedItems.length == 1)
-   mnuItem.label = "Delete Tracking Number";
+  {
+   mnuCopyItem.label = "Copy Tracking Number";
+   mnuDelItem.label = "Delete Tracking Number";
+  }
   else
-   mnuItem.label = "Delete Tracking Numbers";
+  {
+   mnuCopyItem.label = "Copy Tracking Numbers";
+   mnuDelItem.label = "Delete Tracking Numbers";
+  }
   return true;
  },
  tpHistoryKeyDown: function(e)
@@ -319,6 +326,31 @@ com.dakahler.tp.history =
      com.dakahler.tp.functionLib.tpHistoryOpenMap(carrier,trackingString,true);
    }
   }
+ },
+ tpCopyNumber: function()
+ {
+  const gClipboardHelper = Components.classes["@mozilla.org/widget/clipboardhelper;1"].getService(Components.interfaces.nsIClipboardHelper);
+  var myListbox  = document.getElementById("historyListbox");
+  var items      = myListbox.selectedItems;
+  if (items.length == 1)
+  {
+   var nodes          = items[0].childNodes;
+   var trackingString = nodes.item(1).getAttribute("label");
+   gClipboardHelper.copyString(trackingString);
+  }
+  else
+  {
+   var clipStr = "";
+   for (var index = 0; index < items.length; index++)
+   {
+    var nodes          = items[index].childNodes;
+    var carrier        = nodes.item(0).getAttribute("label");
+    var trackingString = nodes.item(1).getAttribute("label");
+    clipStr += carrier + ": " + trackingString + "\n";
+   }
+   gClipboardHelper.copyString(clipStr.trim());
+  }
+
  },
  tpClearHistory: function()
  {
