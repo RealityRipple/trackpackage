@@ -7,7 +7,8 @@
                   em:creator="RealityRipple"
                   em:description="Track Packages from the right-click menu."
                   em:homepageURL="https://realityripple.com/Software/Mozilla-Extensions/Track-Package/"
-                  em:iconURL="chrome://trackpackage/skin/icon.png"
+                  em:iconURL="chrome://trackpackage/skin/logo.png"
+                  em:icon64URL="chrome://trackpackage/skin/logo64.png"
                   em:optionsURL="chrome://trackpackage/content/tpPrefDialog.xul"
                   em:updateURL="https://realityripple.com/Software/Mozilla-Extensions/Track-Package/update.rdf"
 				              em:type="2">
