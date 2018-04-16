@@ -215,11 +215,11 @@ com.dakahler.tp.functionLib =
   {
    if ((typeof gContextMenu == 'object') && gContextMenu.searchSelected)
    {
-    trackingString = com.dakahler.tp.functionLib.tpRemoveSpaces(gContextMenu.searchSelected(30));
+    trackingString = com.dakahler.tp.functionLib.tpRemoveSpaces(gContextMenu.searchSelected(40));
    }
    else if (typeof getBrowserSelection == 'function')
    {
-    trackingString = com.dakahler.tp.functionLib.tpRemoveSpaces(getBrowserSelection(30));
+    trackingString = com.dakahler.tp.functionLib.tpRemoveSpaces(getBrowserSelection(40));
    }
    else
    {
