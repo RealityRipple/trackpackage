@@ -180,7 +180,7 @@ com.dakahler.tp.functionLib =
     {
      notifyText = "Tracked Package via " + com.dakahler.tp.functionLib.tpGetPackageCarrier(originalTrackingString) + ". Fix Carrier?";
     }
-    notifyBox.appendNotification(notifyText, originalTrackingString, "chrome://trackpackage/skin/icon.png", notifyBox.PRIORITY_INFO_HIGH, buttons);
+    notifyBox.appendNotification(notifyText, originalTrackingString, "chrome://trackpackage/skin/logo.png", notifyBox.PRIORITY_INFO_HIGH, buttons);
    }
   }
  },
