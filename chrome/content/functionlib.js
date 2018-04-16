@@ -163,7 +163,7 @@ com.dakahler.tp.functionLib =
     buttons[i] = 
     {
      label: carrier,
-     accessKey: null,
+     accessKey: '',
      callback: com.dakahler.tp.functionLib.tpButtonCallback
     };
    }
