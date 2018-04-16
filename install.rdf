@@ -3,7 +3,7 @@
  <RDF:Description RDF:about="urn:mozilla:install-manifest"
                   em:id="{32C0E919-16F4-5571-840D-D3F952999437}"
                   em:name="Track Package"
-                  em:version="4.1"
+                  em:version="4.2"
                   em:creator="RealityRipple"
                   em:description="Track Packages from the right-click menu."
                   em:homepageURL="https://realityripple.com/Software/Mozilla-Extensions/Track-Package/"
