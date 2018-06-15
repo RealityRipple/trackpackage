@@ -3,6 +3,9 @@
 <overlay id="TrackPackageOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
  <script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js"/>
  <script type="application/x-javascript" src="chrome://trackpackage/content/trackpackage.js"/>
+ <vbox id="appmenuSecondaryPane">
+  <menuitem label="Tracking History..." insertafter="appmenu_addons" oncommand="com.dakahler.tp.functionLib.tpOpenHistory();"    />
+ </vbox>
  <menupopup id="menu_ToolsPopup">
   <menuitem label="Tracking History..." insertafter="devToolsSeparator" oncommand="com.dakahler.tp.functionLib.tpOpenHistory();"    />
  </menupopup>
