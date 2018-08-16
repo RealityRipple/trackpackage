@@ -3,7 +3,7 @@
  <RDF:Description RDF:about="urn:mozilla:install-manifest"
                   em:id="{32C0E919-16F4-5571-840D-D3F952999437}"
                   em:name="Track Package"
-                  em:version="4.4"
+                  em:version="4.5"
                   em:creator="RealityRipple"
                   em:description="Track Packages from the right-click menu."
                   em:homepageURL="https://realityripple.com/Software/Mozilla-Extensions/Track-Package/"
@@ -35,5 +35,5 @@
 	<RDF:Description RDF:about="rdf:#$palemoon"
                    em:id="{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}"
                    em:minVersion="25.0a1pre"
-                   em:maxVersion="27.*" />
+                   em:maxVersion="28.*" />
 </RDF:RDF>
