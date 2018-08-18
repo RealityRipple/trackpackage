@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/css" href="chrome://trackpackage/content/tpButton.css"?>
+<?xml-stylesheet type="text/css" href="chrome://trackpackage/skin/tpButton.css" ?>
 <overlay id="TrackPackageOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
  <script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js"/>
  <script type="application/x-javascript" src="chrome://trackpackage/content/trackpackage.js"/>

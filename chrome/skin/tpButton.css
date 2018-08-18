@@ -1,24 +1,34 @@
-#tpbutton
+#tpButtonMenu
 {
  list-style-image: url("chrome://trackpackage/skin/tpButton.png");
 }
-#tpbutton
+/*
+#tpButtonMenu
 {
  -moz-image-region: rect( 0px 24px 24px  0px);
 }
-#tpbutton:hover     
+#tpButtonMenu:hover     
 {
  -moz-image-region: rect(24px 24px 48px  0px);
 }
-[iconsize="small"] #tpbutton
+[iconsize="small"] #tpButtonMenu
 {
  -moz-image-region: rect( 0px 40px 16px 24px);
 }
-[iconsize="small"] #tpbutton:hover
+[iconsize="small"] #tpButtonMenu:hover
 {
  -moz-image-region: rect(24px 40px 40px 24px);
-}  
-#palette-box #tpbuttonmenu
+}
+*/
+#tpButtonMenu
+{
+ -moz-image-region: rect( 0px 40px 16px 24px);
+}
+#tpButtonMenu:hover
+{
+ -moz-image-region: rect(24px 40px 40px 24px);
+}
+#palette-box #tpButtonMenu
 {
  max-height: 30px;
 }
