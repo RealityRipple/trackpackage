@@ -272,6 +272,10 @@ var TrackPackage_functionLib =
   var targetMenu = document.getElementById("tpButtonMenuPopup");
   if (typeof(buttonMenu) !== 'undefined' && buttonMenu != null)
   {
+   if (TrackPackage_functionLib.gInThunderbird)
+    buttonMenu.className = "toolbarbutton-1 tb";
+   else
+    buttonMenu.className = "toolbarbutton-1";
    while (targetMenu.firstChild)
    {
     targetMenu.removeChild(targetMenu.firstChild);

@@ -2,7 +2,6 @@
 {
  list-style-image: url("chrome://trackpackage/skin/tpButton.png");
 }
-/*
 #tpButtonMenu
 {
  -moz-image-region: rect( 0px 24px 24px  0px);
@@ -11,20 +10,11 @@
 {
  -moz-image-region: rect(24px 24px 48px  0px);
 }
-[iconsize="small"] #tpButtonMenu
+[iconsize="small"] #tpButtonMenu, #tpButtonMenu.tb
 {
  -moz-image-region: rect( 0px 40px 16px 24px);
 }
-[iconsize="small"] #tpButtonMenu:hover
-{
- -moz-image-region: rect(24px 40px 40px 24px);
-}
-*/
-#tpButtonMenu
-{
- -moz-image-region: rect( 0px 40px 16px 24px);
-}
-#tpButtonMenu:hover
+[iconsize="small"] #tpButtonMenu:hover, #tpButtonMenu:hover.tb
 {
  -moz-image-region: rect(24px 40px 40px 24px);
 }
