@@ -227,7 +227,7 @@ com.dakahler.tp.main =
  },
  tpButtonMenuPressed: function(target)
  {
-  if (target.id == "tpbuttonmenu")
+  if (target.id == "tpButtonMenu")
   {
    var child = target.firstChild;
    while (child)

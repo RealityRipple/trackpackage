@@ -13,49 +13,22 @@
   <menuitem label="Tracking History..." insertbefore="prefSep" oncommand="com.dakahler.tp.functionLib.tpOpenHistory();" />
  </menupopup>
  <toolbarpalette id="BrowserToolbarPalette">
-  <toolbarbutton label="Add Tracking Links"
-      id="tpbutton"
-      tooltiptext="Link all tracking numbers"
-      class="toolbarbutton-1"
-      oncommand="com.dakahler.tp.main.tpLinkNumbers();" />
- </toolbarpalette>
- <toolbarpalette id="BrowserToolbarPalette">
-  <toolbaritem id="tphistorydropdown" class="chromeclass-toolbar-additional">
-    <button label="Tracking History"
-        type="menu-button"
-        id="tpbuttonmenu"
-        tooltiptext="Track"
-        minwidth="125"
-        class="chromeclass-toolbar-additional"
-        oncommand="com.dakahler.tp.main.tpButtonMenuPressed(event.target);"
-        onload="if (typeof(com) !== 'undefined') com.dakahler.tp.main.tpButtonMenuLoaded();">
-     <menupopup id="toolbarMenuPopup">
-     </menupopup>
-    </button>
-  </toolbaritem>
+  <toolbarbutton id="tpButtonMenu" />
  </toolbarpalette>
  <toolbarpalette id="MailToolbarPalette">
-  <toolbarbutton label="Add Tracking Links"
-      id="tpbutton"
-      tooltiptext="Link all tracking numbers"
+  <toolbarbutton id="tpButtonMenu" />
+ </toolbarpalette>
+ <toolbarbutton label="Tracking History"
+      type="menu-button"
+      id="tpButtonMenu"
+      tooltiptext="Track"
       class="toolbarbutton-1"
-      oncommand="com.dakahler.tp.main.tpLinkNumbers();" />
- </toolbarpalette>
- <toolbarpalette id="MailToolbarPalette">
-  <toolbaritem id="tphistorydropdown" class="chromeclass-toolbar-additional">
-   <button label="Tracking History"
-       type="menu-button"
-       id="tpbuttonmenu"
-       tooltiptext="Track"
-       minwidth="125"
-       class="chromeclass-toolbar-additional"
-       oncommand="com.dakahler.tp.main.tpButtonMenuPressed(event.target);"
-       onload="if (typeof(com) !== 'undefined') com.dakahler.tp.main.tpButtonMenuLoaded();">
-    <menupopup id="toolbarMenuPopup">
-    </menupopup>
-   </button>
-  </toolbaritem>
- </toolbarpalette>
+      removable="true"
+      oncommand="com.dakahler.tp.main.tpButtonMenuPressed(event.target);"
+      onload="if (typeof(com) !== 'undefined') com.dakahler.tp.main.tpButtonMenuLoaded();">
+  <menupopup id="tpButtonMenuPopup">
+  </menupopup>
+ </toolbarbutton>
  <popup id="contentAreaContextMenu">
   <menuitem id="trackpackage" label="Track Package" oncommand="com.dakahler.tp.functionLib.tpTrackPackage();" />
   <menu id="trackpackage_explicitmenu" label="Track Package">
