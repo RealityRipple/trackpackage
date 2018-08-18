@@ -1,31 +1,27 @@
 // Copyright Dave Kahler. Do not copy without permission.
-if(!com) var com={};
-if(!com.dakahler) com.dakahler={};
-if(!com.dakahler.tp) com.dakahler.tp={};
-if(!com.dakahler.tp.prefs) com.dakahler.tp.prefs={};
-com.dakahler.tp.prefs =
+var TrackPackage_prefs =
 {
  tpPrefs: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage."),
  observerService: Components.classes["@mozilla.org/observer-service;1"].getService(Components.interfaces.nsIObserverService),
  tpXMLObject: null,
  tpLoadCheckSetting: function(pref, def)
  {
-  if (com.dakahler.tp.prefs.tpPrefs.prefHasUserValue(pref))
-   document.getElementById(pref).setAttribute("checked", com.dakahler.tp.prefs.tpPrefs.getBoolPref(pref));
+  if (TrackPackage_prefs.tpPrefs.prefHasUserValue(pref))
+   document.getElementById(pref).setAttribute("checked", TrackPackage_prefs.tpPrefs.getBoolPref(pref));
   else
    document.getElementById(pref).setAttribute("checked", def);
  },
  tpLoadIntValueSetting: function(pref, def)
  {
-  if (com.dakahler.tp.prefs.tpPrefs.prefHasUserValue(pref))
-   document.getElementById(pref).value = com.dakahler.tp.prefs.tpPrefs.getIntPref(pref);
+  if (TrackPackage_prefs.tpPrefs.prefHasUserValue(pref))
+   document.getElementById(pref).value = TrackPackage_prefs.tpPrefs.getIntPref(pref);
   else
    document.getElementById(pref).value = def;
  },
  tpLoadCharValueSetting: function(pref, def)
  {
-  if (com.dakahler.tp.prefs.tpPrefs.prefHasUserValue(pref))
-   document.getElementById(pref).setAttribute("value", com.dakahler.tp.prefs.tpPrefs.getCharPref(pref));
+  if (TrackPackage_prefs.tpPrefs.prefHasUserValue(pref))
+   document.getElementById(pref).setAttribute("value", TrackPackage_prefs.tpPrefs.getCharPref(pref));
   else
    document.getElementById(pref).setAttribute("value", def);
  },
@@ -34,30 +30,30 @@ com.dakahler.tp.prefs =
   const THUNDERBIRD_ID = "{3550f703-e582-4d05-9a08-453d09bdfdc6}";
   var appInfo = Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULAppInfo);
   if (appInfo.ID == THUNDERBIRD_ID)
-   com.dakahler.tp.functionLib.gInThunderbird = true;
+   TrackPackage_functionLib.gInThunderbird = true;
   else
-   com.dakahler.tp.functionLib.gInThunderbird = false;
-  com.dakahler.tp.prefs.tpLoadCheckSetting("tpCheckBox", true);
-  com.dakahler.tp.prefs.tpLoadCheckSetting("tpSmartSense", true);
-  com.dakahler.tp.prefs.tpLoadCheckSetting("tpNotifications", true);
-  com.dakahler.tp.prefs.tpLoadCheckSetting("tpPrivateBrowsing", true);
-  com.dakahler.tp.prefs.tpLoadCheckSetting("tpUseThunderbrowse", true);
-  com.dakahler.tp.prefs.tpLoadIntValueSetting("tpMaxNumbers", 25);
-  com.dakahler.tp.prefs.tpLoadIntValueSetting("tpMaxDropdownItems", 5);
-  com.dakahler.tp.prefs.tpLoadCheckSetting("tpEnableGMaps", false);
-  com.dakahler.tp.prefs.tpLoadCharValueSetting("tpUpdateURL", "https://realityripple.com/Software/Mozilla-Extensions/Track-Package/defaults.xml");
-  if (!com.dakahler.tp.functionLib.gInThunderbird)
+   TrackPackage_functionLib.gInThunderbird = false;
+  TrackPackage_prefs.tpLoadCheckSetting("tpCheckBox", true);
+  TrackPackage_prefs.tpLoadCheckSetting("tpSmartSense", true);
+  TrackPackage_prefs.tpLoadCheckSetting("tpNotifications", true);
+  TrackPackage_prefs.tpLoadCheckSetting("tpPrivateBrowsing", true);
+  TrackPackage_prefs.tpLoadCheckSetting("tpUseThunderbrowse", true);
+  TrackPackage_prefs.tpLoadIntValueSetting("tpMaxNumbers", 25);
+  TrackPackage_prefs.tpLoadIntValueSetting("tpMaxDropdownItems", 5);
+  TrackPackage_prefs.tpLoadCheckSetting("tpEnableGMaps", false);
+  TrackPackage_prefs.tpLoadCharValueSetting("tpUpdateURL", "https://realityripple.com/Software/Mozilla-Extensions/Track-Package/defaults.xml");
+  if (!TrackPackage_functionLib.gInThunderbird)
   {
    document.getElementById("tpUseThunderbrowse").style.visibility = 'hidden';
    document.getElementById("tpUseThunderbrowse").style.display = 'none';
   }
-  var regexesArray = com.dakahler.tp.functionLib.regexDefaults.split(";");
-  if (com.dakahler.tp.prefs.tpPrefs.prefHasUserValue("tpRegex"))
-   regexesArray = com.dakahler.tp.prefs.tpPrefs.getCharPref("tpRegex").split(";");
+  var regexesArray = TrackPackage_functionLib.regexDefaults.split(";");
+  if (TrackPackage_prefs.tpPrefs.prefHasUserValue("tpRegex"))
+   regexesArray = TrackPackage_prefs.tpPrefs.getCharPref("tpRegex").split(";");
   var regexListbox = document.getElementById("regexListbox");
   for (var i = 0; i < regexesArray.length; i++)
   {
-   var carrierRegex = com.dakahler.tp.functionLib.tpExtractQuotedStrings(regexesArray[i]);
+   var carrierRegex = TrackPackage_functionLib.tpExtractQuotedStrings(regexesArray[i]);
    if (carrierRegex == "")
     return;
    var newCarrierField = document.createElement("textbox");
@@ -72,13 +68,13 @@ com.dakahler.tp.prefs =
    row.appendChild(regexCell);
    regexListbox.appendChild(row);
   }
-  var urlArray = com.dakahler.tp.functionLib.URLDefaults.split(";");
-  if (com.dakahler.tp.prefs.tpPrefs.prefHasUserValue("tpURL"))
-   urlArray = com.dakahler.tp.prefs.tpPrefs.getCharPref("tpURL").split(";");
+  var urlArray = TrackPackage_functionLib.URLDefaults.split(";");
+  if (TrackPackage_prefs.tpPrefs.prefHasUserValue("tpURL"))
+   urlArray = TrackPackage_prefs.tpPrefs.getCharPref("tpURL").split(";");
   var urlListbox = document.getElementById("urlListbox");
   for (var i = 0; i < urlArray.length; i++)
   {
-   var carrierURL = com.dakahler.tp.functionLib.tpExtractQuotedStrings(urlArray[i]);
+   var carrierURL = TrackPackage_functionLib.tpExtractQuotedStrings(urlArray[i]);
    if (carrierURL == "")
     continue;
    var newCarrierField  = document.createElement("textbox");
@@ -101,15 +97,15 @@ com.dakahler.tp.prefs =
  },
  tpSaveSettings: function()
  {
-  com.dakahler.tp.prefs.tpPrefs.setBoolPref("tpCheckBox", document.getElementById("tpCheckBox").checked);
-  com.dakahler.tp.prefs.tpPrefs.setBoolPref("tpSmartSense", document.getElementById("tpSmartSense").checked);
-  com.dakahler.tp.prefs.tpPrefs.setBoolPref("tpNotifications", document.getElementById("tpNotifications").checked);
-  com.dakahler.tp.prefs.tpPrefs.setBoolPref("tpPrivateBrowsing", document.getElementById("tpPrivateBrowsing").checked);
-  com.dakahler.tp.prefs.tpPrefs.setBoolPref("tpUseThunderbrowse", document.getElementById("tpUseThunderbrowse").checked);
-  com.dakahler.tp.prefs.tpPrefs.setIntPref("tpMaxNumbers", document.getElementById("tpMaxNumbers").value);
-  com.dakahler.tp.prefs.tpPrefs.setIntPref("tpMaxDropdownItems", document.getElementById("tpMaxDropdownItems").value);
-  com.dakahler.tp.prefs.tpPrefs.setBoolPref("tpEnableGMaps", document.getElementById("tpEnableGMaps").checked);
-  com.dakahler.tp.prefs.tpPrefs.setCharPref("tpUpdateURL", document.getElementById("tpUpdateURL").value);
+  TrackPackage_prefs.tpPrefs.setBoolPref("tpCheckBox", document.getElementById("tpCheckBox").checked);
+  TrackPackage_prefs.tpPrefs.setBoolPref("tpSmartSense", document.getElementById("tpSmartSense").checked);
+  TrackPackage_prefs.tpPrefs.setBoolPref("tpNotifications", document.getElementById("tpNotifications").checked);
+  TrackPackage_prefs.tpPrefs.setBoolPref("tpPrivateBrowsing", document.getElementById("tpPrivateBrowsing").checked);
+  TrackPackage_prefs.tpPrefs.setBoolPref("tpUseThunderbrowse", document.getElementById("tpUseThunderbrowse").checked);
+  TrackPackage_prefs.tpPrefs.setIntPref("tpMaxNumbers", document.getElementById("tpMaxNumbers").value);
+  TrackPackage_prefs.tpPrefs.setIntPref("tpMaxDropdownItems", document.getElementById("tpMaxDropdownItems").value);
+  TrackPackage_prefs.tpPrefs.setBoolPref("tpEnableGMaps", document.getElementById("tpEnableGMaps").checked);
+  TrackPackage_prefs.tpPrefs.setCharPref("tpUpdateURL", document.getElementById("tpUpdateURL").value);
   var myRegListbox      = document.getElementById("regexListbox");
   var regexPrefArray    = new Array();
   var regexCarrierArray = new Array();
@@ -174,9 +170,9 @@ com.dakahler.tp.prefs =
     return false;
    }
   }
-  com.dakahler.tp.prefs.tpPrefs.setCharPref("tpURL", urlPref);
-  com.dakahler.tp.prefs.tpPrefs.setCharPref("tpRegex", regexPref);
-  com.dakahler.tp.prefs.observerService.notifyObservers(null, "trackpackage-settings", "changed");
+  TrackPackage_prefs.tpPrefs.setCharPref("tpURL", urlPref);
+  TrackPackage_prefs.tpPrefs.setCharPref("tpRegex", regexPref);
+  TrackPackage_prefs.observerService.notifyObservers(null, "trackpackage-settings", "changed");
   return true;
  },
  tpAddNewRegex: function()
@@ -222,17 +218,17 @@ com.dakahler.tp.prefs =
  {
   if(!confirm("Are you sure you want to reset the Tracking Number Detections to default? This cannot be undone!"))
    return;
-  com.dakahler.tp.prefs.tpPrefs.setCharPref("tpRegex", com.dakahler.tp.functionLib.regexDefaults);
+  TrackPackage_prefs.tpPrefs.setCharPref("tpRegex", TrackPackage_functionLib.regexDefaults);
   var regexListbox = document.getElementById("regexListbox");
   var numElements = regexListbox.getRowCount();
   for (var index = 0; index < numElements; index++)
   {
    regexListbox.removeItemAt(0);
   }
-  var regexesArray = com.dakahler.tp.functionLib.regexDefaults.split(";");
+  var regexesArray = TrackPackage_functionLib.regexDefaults.split(";");
   for (var i = 0; i < regexesArray.length; i++)
   {
-   var carrierRegex = com.dakahler.tp.functionLib.tpExtractQuotedStrings(regexesArray[i]);
+   var carrierRegex = TrackPackage_functionLib.tpExtractQuotedStrings(regexesArray[i]);
    var row          = document.createElement('listitem');
    var carrierCell  = document.createElement('textbox');
    var regexCell    = document.createElement('textbox');
@@ -248,17 +244,17 @@ com.dakahler.tp.prefs =
  {
   if(!confirm("Are you sure you want to reset the Service URLs to default? This cannot be undone!"))
    return;
-  com.dakahler.tp.prefs.tpPrefs.setCharPref("tpURL", com.dakahler.tp.functionLib.URLDefaults);
+  TrackPackage_prefs.tpPrefs.setCharPref("tpURL", TrackPackage_functionLib.URLDefaults);
   var urlListbox  = document.getElementById("urlListbox");
   var numElements = urlListbox.getRowCount();
   for (var index = 0; index < numElements; index++)
   {
    urlListbox.removeItemAt(0);
   }
-  var urlArray = com.dakahler.tp.functionLib.URLDefaults.split(";");
+  var urlArray = TrackPackage_functionLib.URLDefaults.split(";");
   for (var i = 0; i < urlArray.length; i++)
   {
-   var carrierURL   = com.dakahler.tp.functionLib.tpExtractQuotedStrings(urlArray[i]);
+   var carrierURL   = TrackPackage_functionLib.tpExtractQuotedStrings(urlArray[i]);
    var row          = document.createElement('listitem');
    var carrierCell  = document.createElement('textbox');
    var urlFrontCell = document.createElement('textbox');
@@ -273,20 +269,6 @@ com.dakahler.tp.prefs =
    urlListbox.appendChild(row);
   }
  },
- tpUpdateDefs: function()
- {
-  if(!confirm("Are you sure you want to update definitions from the Internet?\nThis will overwrite all your current Tracking Number Definitions and Service URLs and cannot be undone."))
-   return;
-  var xmldoc = document.implementation.createDocument("", "", null);
-  xmldoc.addEventListener("load", function(event){com.dakahler.tp.prefs.processXML(event.currentTarget)}, false);
-  var req = new XMLHttpRequest();
-  com.dakahler.tp.prefs.tpXMLObject = req;
-  req.open('GET', document.getElementById("tpUpdateURL").value, false);
-  req.channel.loadFlags |= Components.interfaces.nsIRequest.LOAD_BYPASS_CACHE;
-  req.onload = com.dakahler.tp.prefs.processXML;
-  req.onerror = com.dakahler.tp.prefs.xmlLoadError;
-  req.send(null);
- },
  tpSaveXML: function()
  {
   const nsIFilePicker = Components.interfaces.nsIFilePicker;
@@ -300,7 +282,7 @@ com.dakahler.tp.prefs =
   {
    var finalXML = "<?xml version=\"1.0\"?>\n\n";
    finalXML += "<trackpackage>\n\n";
-   var regexURLArray = com.dakahler.tp.functionLib.tpGetRegexURLArray();
+   var regexURLArray = TrackPackage_functionLib.tpGetRegexURLArray();
    for (var i = 0; i < regexURLArray.length; i++)
    {
     if (regexURLArray[i][1] == "")
@@ -330,20 +312,20 @@ com.dakahler.tp.prefs =
  },
  processXML: function(xmlDoc)
  {
-  if (!com.dakahler.tp.prefs.tpXMLObject.responseXML)
+  if (!TrackPackage_prefs.tpXMLObject.responseXML)
   {
-   com.dakahler.tp.prefs.xmlLoadError();
+   TrackPackage_prefs.xmlLoadError();
    return;
   }
-  var rootNode = com.dakahler.tp.prefs.tpXMLObject.responseXML.firstChild;
+  var rootNode = TrackPackage_prefs.tpXMLObject.responseXML.firstChild;
   if (!rootNode)
   {
-   com.dakahler.tp.prefs.xmlLoadError()
+   TrackPackage_prefs.xmlLoadError()
    return;
   }
   if (rootNode.nodeName == "parsererror")
   {
-   com.dakahler.tp.prefs.xmlLoadError()
+   TrackPackage_prefs.xmlLoadError()
    return;
   }
   var nodes      = rootNode.childNodes;
@@ -369,8 +351,8 @@ com.dakahler.tp.prefs =
   }
   var finalRegexString = regexArray.join(";");
   var finalURLString   = urlArray.join(";");
-  com.dakahler.tp.prefs.tpPrefs.setCharPref("tpRegex", finalRegexString);
-  com.dakahler.tp.prefs.tpPrefs.setCharPref("tpURL", finalURLString);
+  TrackPackage_prefs.tpPrefs.setCharPref("tpRegex", finalRegexString);
+  TrackPackage_prefs.tpPrefs.setCharPref("tpURL", finalURLString);
   var regexListbox = document.getElementById("regexListbox");
   var numElements  = regexListbox.getRowCount();
   for (var index = 0; index < numElements; index++)
@@ -383,7 +365,21 @@ com.dakahler.tp.prefs =
   {
    urlListbox.removeItemAt(0);
   }
-  com.dakahler.tp.prefs.tpLoadSettings();
+  TrackPackage_prefs.tpLoadSettings();
   alert("Successfully loaded remote XML preferences!");
+ },
+ tpUpdateDefs: function()
+ {
+  if(!confirm("Are you sure you want to update definitions from the Internet?\nThis will overwrite all your current Tracking Number Definitions and Service URLs and cannot be undone."))
+   return;
+  var xmldoc = document.implementation.createDocument("", "", null);
+  xmldoc.addEventListener("load", function(event){TrackPackage_prefs.processXML(event.currentTarget)}, false);
+  var req = new XMLHttpRequest();
+  TrackPackage_prefs.tpXMLObject = req;
+  req.open('GET', document.getElementById("tpUpdateURL").value, false);
+  req.channel.loadFlags |= Components.interfaces.nsIRequest.LOAD_BYPASS_CACHE;
+  req.onload = TrackPackage_prefs.processXML;
+  req.onerror = TrackPackage_prefs.xmlLoadError;
+  req.send(null);
  }
-}
+};

@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/css" href="chrome://trackpackage/skin/tpButton.css" ?>
 <overlay id="TrackPackageOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
- <script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js"/>
- <script type="application/x-javascript" src="chrome://trackpackage/content/trackpackage.js"/>
+ <script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js" />
+ <script type="application/x-javascript" src="chrome://trackpackage/content/trackpackage.js" />
  <vbox id="appmenuSecondaryPane">
-  <menuitem label="Tracking History..." insertafter="appmenu_addons" oncommand="com.dakahler.tp.functionLib.tpOpenHistory();"    />
+  <menuitem label="Tracking History..." insertafter="appmenu_addons" oncommand="TrackPackage_functionLib.tpOpenHistory();" />
  </vbox>
  <menupopup id="menu_ToolsPopup">
-  <menuitem label="Tracking History..." insertafter="devToolsSeparator" oncommand="com.dakahler.tp.functionLib.tpOpenHistory();"    />
+  <menuitem label="Tracking History..." insertafter="devToolsSeparator" oncommand="TrackPackage_functionLib.tpOpenHistory();" />
  </menupopup>
  <menupopup id="taskPopup">
-  <menuitem label="Tracking History..." insertbefore="prefSep" oncommand="com.dakahler.tp.functionLib.tpOpenHistory();" />
+  <menuitem label="Tracking History..." insertbefore="prefSep" oncommand="TrackPackage_functionLib.tpOpenHistory();" />
  </menupopup>
  <toolbarpalette id="BrowserToolbarPalette">
   <toolbarbutton id="tpButtonMenu" />
@@ -24,31 +24,31 @@
       tooltiptext="Track"
       class="toolbarbutton-1"
       removable="true"
-      oncommand="com.dakahler.tp.main.tpButtonMenuPressed(event.target);"
-      onload="if (typeof(com) !== 'undefined') com.dakahler.tp.main.tpButtonMenuLoaded();">
+      oncommand="TrackPackage_overlay.tpButtonMenuPressed(event.target);"
+      onload="if (typeof(TrackPackage_overlay) !== 'undefined') TrackPackage_overlay.tpButtonMenuLoaded();">
   <menupopup id="tpButtonMenuPopup">
   </menupopup>
  </toolbarbutton>
  <popup id="contentAreaContextMenu">
-  <menuitem id="trackpackage" label="Track Package" oncommand="com.dakahler.tp.functionLib.tpTrackPackage();" />
+  <menuitem id="trackpackage" label="Track Package" oncommand="TrackPackage_functionLib.tpTrackPackage();" />
   <menu id="trackpackage_explicitmenu" label="Track Package">
-   <menupopup id="trackpackage_explicitpopup"  />
+   <menupopup id="trackpackage_explicitpopup" />
   </menu>
  </popup>
  <popup id="messagePaneContext">
-  <menuitem id="trackpackage" label="Track Package" oncommand="com.dakahler.tp.functionLib.tpTrackPackage();" />
+  <menuitem id="trackpackage" label="Track Package" oncommand="TrackPackage_functionLib.tpTrackPackage();" />
   <menu id="trackpackage_explicitmenu" label="Track Package">
    <menupopup id="trackpackage_explicitpopup" />
   </menu>
  </popup>
  <popup id="mailContext">
-  <menuitem id="trackpackage" label="Track Package" oncommand="com.dakahler.tp.functionLib.tpTrackPackage();" />
+  <menuitem id="trackpackage" label="Track Package" oncommand="TrackPackage_functionLib.tpTrackPackage();" />
   <menu id="trackpackage_explicitmenu" label="Track Package">
    <menupopup id="trackpackage_explicitpopup" />
   </menu>
  </popup>
  <popup id="msgComposeContext">
-  <menuitem id="trackpackage" label="Track Package" oncommand="com.dakahler.tp.functionLib.tpTrackPackage();" />
+  <menuitem id="trackpackage" label="Track Package" oncommand="TrackPackage_functionLib.tpTrackPackage();" />
   <menu id="trackpackage_explicitmenu" label="Track Package">
    <menupopup id="trackpackage_explicitpopup" />
   </menu>

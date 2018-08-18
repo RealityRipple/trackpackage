@@ -1,48 +1,6 @@
 // Copyright Dave Kahler. Do not copy without permission.
-if(!com) var com={};
-if(!com.dakahler) com.dakahler={};
-if(!com.dakahler.tp) com.dakahler.tp={};
-if(!com.dakahler.tp.history) com.dakahler.tp.history={};
-com.dakahler.tp.history =
+var TrackPackage_history =
 {
- tpHistoryInit: function()
- {
-  const THUNDERBIRD_ID = "{3550f703-e582-4d05-9a08-453d09bdfdc6}";
-  var appInfo = Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULAppInfo);
-  if (appInfo.ID == THUNDERBIRD_ID)
-  {
-   com.dakahler.tp.functionLib.gInThunderbird = true;
-   if (document.getElementById("messagepanebox"))
-   {
-    com.dakahler.tp.functionLib.gHasThunderbrowse = document.getElementById("messagepanebox").hasAttribute("thunderbrowse");
-   }
-  }
-  else
-  {
-   com.dakahler.tp.functionLib.gInThunderbird = false;
-  }
-  var myTPPrefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage.");
-  var historyString = "";
-  if (myTPPrefs.prefHasUserValue("tpTrackingHistory"))
-   historyString = myTPPrefs.getCharPref("tpTrackingHistory");
-  var historyArray = com.dakahler.tp.history.tpBuildHistoryArray(historyString);
-  com.dakahler.tp.history.tpPopulateListBox(historyArray);
-  if (com.dakahler.tp.functionLib.tpGetGMapsSetting() && (document.getElementById("mapButton") == undefined))
-  {
-   var menuitem = document.createElement('button');
-   menuitem.setAttribute('id',"mapButton");
-   menuitem.setAttribute('label',"Map Selected");
-   menuitem.setAttribute('oncommand',"com.dakahler.tp.history.tpHistoryMapTrack();");
-   menuitem.setAttribute('style',"width: 120px; height: 30px;");
-   if (document.getElementById("buttonhbox"))
-    document.getElementById("buttonhbox").appendChild(menuitem);
-   var cmenuitem = document.createElement('menuitem');
-   cmenuitem.setAttribute('label', "Map Selected");
-   cmenuitem.setAttribute('oncommand',"com.dakahler.tp.history.tpHistoryMapTrack();");
-   if (document.getElementById("historyMenu"))
-    document.getElementById("historyMenu").insertBefore(cmenuitem, document.getElementById("historyMenuSpace"));
-  }
- },
  tpBuildHistoryArray: function(historyString)
  {
   return(historyString.split(";"));
@@ -74,6 +32,90 @@ com.dakahler.tp.history =
   }
   return(finalString);
  },
+ 
+ tpHistoryTrack: function()
+ {
+  var myListbox = document.getElementById("historyListbox");
+  var items = myListbox.selectedItems;
+  for (var index = 0; index < items.length; index++)
+  {
+   var nodes          = items[index].childNodes;
+   var carrier        =  nodes.item(0).getAttribute("label");
+   var trackingString =  nodes.item(1).getAttribute("label");
+   var date           =  nodes.item(2).getAttribute("label");
+   var url            = TrackPackage_functionLib.tpGetPackageURL(carrier,trackingString,false);
+   if (url != "")
+   {
+    if (items.length>1)
+    {
+     TrackPackage_functionLib.tpOpenPackageWindow(url,true, false);
+    }
+    else
+    {
+     if (!TrackPackage_functionLib.tpGetTabSetting())
+      TrackPackage_functionLib.tpOpenPackageWindow(url,false, false);
+     else
+      TrackPackage_functionLib.tpOpenPackageWindow(url,true, false);
+    }
+   }
+  }
+ },
+ tpHistoryDelete: function(e)
+ {
+  if (e === undefined)
+  {
+   var myListbox = document.getElementById("historyListbox");
+   if (myListbox.selectedIndex != -1)
+   {
+    var sConfirm = "Are you sure you want to delete the selected Tracking Numbers?";
+    if (myListbox.selectedItems.length == 1)
+    {
+     var nodes          = myListbox.selectedItem.childNodes;
+     var carrier        = nodes.item(0).getAttribute('label');
+     var trackingString = nodes.item(1).getAttribute('label');
+     var date           = nodes.item(2).getAttribute('label');
+     var info           = nodes.item(3).value;
+     var trackID = '';
+     if (info == '')
+      trackID = carrier + ' ' + trackingString;
+     else
+      trackID = info + ' [' + carrier + ': ' + trackingString + ']';
+     sConfirm = "Are you sure you want to delete the selected Tracking Number?";
+     if (trackID != '')
+      sConfirm = "Are you sure you want to delete " + trackID + "?";
+    }
+    if(!confirm(sConfirm))
+     return;
+    while (myListbox.selectedIndex!=-1)
+    {
+     myListbox.removeItemAt(myListbox.selectedIndex);
+    }
+   }
+  }
+  else if (e.which == 1)
+  {
+   var myListbox = document.getElementById("historyListbox");
+   if (myListbox.currentIndex!=-1)
+   {
+    var nodes          = myListbox.currentItem.childNodes;
+    var carrier        = nodes.item(0).getAttribute('label');
+    var trackingString = nodes.item(1).getAttribute('label');
+    var date           = nodes.item(2).getAttribute('label');
+    var info           = nodes.item(3).value;
+    var trackID = '';
+    if (info == '')
+     trackID = carrier + ' ' + trackingString;
+    else
+     trackID = info + ' [' + carrier + ': ' + trackingString + ']';
+    var sConfirm = "Are you sure you want to delete this Tracking Number?";
+    if (trackID != '')
+     sConfirm = "Are you sure you want to delete " + trackID + "?";
+    if(!confirm(sConfirm))
+     return;
+    myListbox.removeItemAt(myListbox.currentIndex);
+   }
+  }
+ },
  tpPopulateListBox: function(historyArray)
  {
   var listBox = document.getElementById("historyListbox");
@@ -96,7 +138,7 @@ com.dakahler.tp.history =
      var cell = document.createElement('menulist');
      var menupopup = document.createElement('menupopup');
      cell.appendChild(menupopup);
-     var regexURLArray = com.dakahler.tp.functionLib.tpGetRegexURLArray();
+     var regexURLArray = TrackPackage_functionLib.tpGetRegexURLArray();
      var carrier;
      var sIndex = 0;
      for (var i = 0; i < regexURLArray.length; i++)
@@ -119,7 +161,7 @@ com.dakahler.tp.history =
       return;
      cell.setAttribute('label', rowArray[cellIndex]);
      row.appendChild(cell);
-     cell.addEventListener("dblclick", com.dakahler.tp.history.tpHistoryTrack,true);
+     cell.addEventListener("dblclick", TrackPackage_history.tpHistoryTrack,true);
     }
     else
     {
@@ -134,9 +176,47 @@ com.dakahler.tp.history =
    }
    var buttonCell = document.createElement('button');
    buttonCell.setAttribute('label', "X");
-   buttonCell.addEventListener("click", com.dakahler.tp.history.tpHistoryDelete, true);
+   buttonCell.addEventListener("click", TrackPackage_history.tpHistoryDelete, true);
    row.appendChild(buttonCell);
    listBox.appendChild(row);
+  }
+ },
+ tpHistoryInit: function()
+ {
+  const THUNDERBIRD_ID = "{3550f703-e582-4d05-9a08-453d09bdfdc6}";
+  var appInfo = Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULAppInfo);
+  if (appInfo.ID == THUNDERBIRD_ID)
+  {
+   TrackPackage_functionLib.gInThunderbird = true;
+   if (document.getElementById("messagepanebox"))
+   {
+    TrackPackage_functionLib.gHasThunderbrowse = document.getElementById("messagepanebox").hasAttribute("thunderbrowse");
+   }
+  }
+  else
+  {
+   TrackPackage_functionLib.gInThunderbird = false;
+  }
+  var myTPPrefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage.");
+  var historyString = "";
+  if (myTPPrefs.prefHasUserValue("tpTrackingHistory"))
+   historyString = myTPPrefs.getCharPref("tpTrackingHistory");
+  var historyArray = TrackPackage_history.tpBuildHistoryArray(historyString);
+  TrackPackage_history.tpPopulateListBox(historyArray);
+  if (TrackPackage_functionLib.tpGetGMapsSetting() && (document.getElementById("mapButton") == undefined))
+  {
+   var menuitem = document.createElement('button');
+   menuitem.setAttribute('id',"mapButton");
+   menuitem.setAttribute('label',"Map Selected");
+   menuitem.setAttribute('oncommand',"TrackPackage_history.tpHistoryMapTrack();");
+   menuitem.setAttribute('style',"width: 120px; height: 30px;");
+   if (document.getElementById("buttonhbox"))
+    document.getElementById("buttonhbox").appendChild(menuitem);
+   var cmenuitem = document.createElement('menuitem');
+   cmenuitem.setAttribute('label', "Map Selected");
+   cmenuitem.setAttribute('oncommand',"TrackPackage_history.tpHistoryMapTrack();");
+   if (document.getElementById("historyMenu"))
+    document.getElementById("historyMenu").insertBefore(cmenuitem, document.getElementById("historyMenuSpace"));
   }
  },
  onResizeHistory: function(e)
@@ -199,62 +279,6 @@ com.dakahler.tp.history =
    }
   }
  },
- tpHistoryDelete: function(e)
- {
-  if (e === undefined)
-  {
-   var myListbox = document.getElementById("historyListbox");
-   if (myListbox.selectedIndex != -1)
-   {
-    var sConfirm = "Are you sure you want to delete the selected Tracking Numbers?";
-    if (myListbox.selectedItems.length == 1)
-    {
-     var nodes          = myListbox.selectedItem.childNodes;
-     var carrier        = nodes.item(0).getAttribute('label');
-     var trackingString = nodes.item(1).getAttribute('label');
-     var date           = nodes.item(2).getAttribute('label');
-     var info           = nodes.item(3).value;
-     var trackID = '';
-     if (info == '')
-      trackID = carrier + ' ' + trackingString;
-     else
-      trackID = info + ' [' + carrier + ': ' + trackingString + ']';
-     sConfirm = "Are you sure you want to delete the selected Tracking Number?";
-     if (trackID != '')
-      sConfirm = "Are you sure you want to delete " + trackID + "?";
-    }
-    if(!confirm(sConfirm))
-     return;
-    while (myListbox.selectedIndex!=-1)
-    {
-     myListbox.removeItemAt(myListbox.selectedIndex);
-    }
-   }
-  }
-  else if (e.which == 1)
-  {
-   var myListbox = document.getElementById("historyListbox");
-   if (myListbox.currentIndex!=-1)
-   {
-    var nodes          = myListbox.currentItem.childNodes;
-    var carrier        = nodes.item(0).getAttribute('label');
-    var trackingString = nodes.item(1).getAttribute('label');
-    var date           = nodes.item(2).getAttribute('label');
-    var info           = nodes.item(3).value;
-    var trackID = '';
-    if (info == '')
-     trackID = carrier + ' ' + trackingString;
-    else
-     trackID = info + ' [' + carrier + ': ' + trackingString + ']';
-    var sConfirm = "Are you sure you want to delete this Tracking Number?";
-    if (trackID != '')
-     sConfirm = "Are you sure you want to delete " + trackID + "?";
-    if(!confirm(sConfirm))
-     return;
-    myListbox.removeItemAt(myListbox.currentIndex);
-   }
-  }
- },
  onCloseHistory: function()
  {
   var myListbox = document.getElementById("historyListbox");
@@ -277,33 +301,6 @@ com.dakahler.tp.history =
   var myTPPrefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage.");
   myTPPrefs.setCharPref("tpTrackingHistory",historyPref);
  },
- tpHistoryTrack: function()
- {
-  var myListbox = document.getElementById("historyListbox");
-  var items = myListbox.selectedItems;
-  for (var index = 0; index < items.length; index++)
-  {
-   var nodes          = items[index].childNodes;
-   var carrier        =  nodes.item(0).getAttribute("label");
-   var trackingString =  nodes.item(1).getAttribute("label");
-   var date           =  nodes.item(2).getAttribute("label");
-   var url            = com.dakahler.tp.functionLib.tpGetPackageURL(carrier,trackingString,false);
-   if (url != "")
-   {
-    if (items.length>1)
-    {
-     com.dakahler.tp.functionLib.tpOpenPackageWindow(url,true, false);
-    }
-    else
-    {
-     if (!com.dakahler.tp.functionLib.tpGetTabSetting())
-      com.dakahler.tp.functionLib.tpOpenPackageWindow(url,false, false);
-     else
-      com.dakahler.tp.functionLib.tpOpenPackageWindow(url,true, false);
-    }
-   }
-  }
- },
  tpHistoryMapTrack: function()
  {
   var myListbox  = document.getElementById("historyListbox");
@@ -316,14 +313,14 @@ com.dakahler.tp.history =
    var date           = nodes.item(2).getAttribute("label");
    if (items.length > 1)
    {
-    com.dakahler.tp.functionLib.tpHistoryOpenMap(carrier,trackingString,true);
+    TrackPackage_functionLib.tpHistoryOpenMap(carrier,trackingString,true);
    }
    else
    {
-    if (!com.dakahler.tp.functionLib.tpGetTabSetting())
-     com.dakahler.tp.functionLib.tpHistoryOpenMap(carrier,trackingString,false);
+    if (!TrackPackage_functionLib.tpGetTabSetting())
+     TrackPackage_functionLib.tpHistoryOpenMap(carrier,trackingString,false);
     else
-     com.dakahler.tp.functionLib.tpHistoryOpenMap(carrier,trackingString,true);
+     TrackPackage_functionLib.tpHistoryOpenMap(carrier,trackingString,true);
    }
   }
  },
@@ -373,7 +370,7 @@ com.dakahler.tp.history =
  {
   var win = window.open("chrome://trackpackage/content/tpPrefDialog.xul", "prefdialog", "chrome,screenX=150,screenY=150");
   win.focus();
-  win.onunload = com.dakahler.tp.history.tpHistoryInit;
+  win.onunload = TrackPackage_history.tpHistoryInit;
  }
-}
-window.addEventListener("load",com.dakahler.tp.history.tpHistoryInit,false);
+};
+window.addEventListener("load", TrackPackage_history.tpHistoryInit, false);

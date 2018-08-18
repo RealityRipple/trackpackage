@@ -5,8 +5,8 @@
         buttons="accept,cancel"
         width="475"
         height="350"
-        onload="return com.dakahler.tp.prefs.tpLoadSettings();"
-        ondialogaccept="return com.dakahler.tp.prefs.tpSaveSettings();"
+        onload="return TrackPackage_prefs.tpLoadSettings();"
+        ondialogaccept="return TrackPackage_prefs.tpSaveSettings();"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
  <script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js" />
@@ -62,10 +62,10 @@
      </listbox>
      <spacer height="5" />
      <hbox>
-      <button label="Add RegEx Detection" onclick="com.dakahler.tp.prefs.tpAddNewRegex()" style="width: 150px;" />
-      <button label="Remove Detection" onclick="com.dakahler.tp.prefs.tpDeleteRegex()" style="width: 120px;" />
+      <button label="Add RegEx Detection" onclick="TrackPackage_prefs.tpAddNewRegex()" style="width: 150px;" />
+      <button label="Remove Detection" onclick="TrackPackage_prefs.tpDeleteRegex()" style="width: 120px;" />
       <spacer flex="1" />
-      <button label="Reset To Defaults" onclick="com.dakahler.tp.prefs.tpResetRegexDefaults()" style="width: 120px;" />
+      <button label="Reset To Defaults" onclick="TrackPackage_prefs.tpResetRegexDefaults()" style="width: 120px;" />
      </hbox>
     </vbox>
    </tabpanel>
@@ -85,10 +85,10 @@
      </listbox>
      <spacer height="5" />
      <hbox>
-      <button label="Add Service URL" onclick="com.dakahler.tp.prefs.tpAddNewURL()" style="width: 150px;" />
-      <button label="Remove Service" onclick="com.dakahler.tp.prefs.tpDeleteURL()" style="width: 120px;" />
+      <button label="Add Service URL" onclick="TrackPackage_prefs.tpAddNewURL()" style="width: 150px;" />
+      <button label="Remove Service" onclick="TrackPackage_prefs.tpDeleteURL()" style="width: 120px;" />
       <spacer flex="1" />
-      <button label="Reset To Defaults" onclick="com.dakahler.tp.prefs.tpResetURLDefaults()" style="width: 120px;" />
+      <button label="Reset To Defaults" onclick="TrackPackage_prefs.tpResetURLDefaults()" style="width: 120px;" />
      </hbox>
     </vbox>
    </tabpanel>
@@ -109,12 +109,12 @@
      <label value="Tracking Number and Service URL Definitions:" control="tpUpdateURL"/>
      <hbox>
       <textbox id="tpUpdateURL" flex="1" />
-      <button label="Update" onclick="com.dakahler.tp.prefs.tpUpdateDefs()" />
+      <button label="Update" onclick="TrackPackage_prefs.tpUpdateDefs()" />
      </hbox>
      <spacer height="30" />
      <hbox>
       <spacer flex="1" />
-      <button label="Export XML..." onclick="com.dakahler.tp.prefs.tpSaveXML()" />
+      <button label="Export XML..." onclick="TrackPackage_prefs.tpSaveXML()" />
      </hbox>
     </vbox>
    </tabpanel>
