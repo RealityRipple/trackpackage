@@ -10,7 +10,7 @@
   <menuitem label="Tracking History..." insertafter="devToolsSeparator" oncommand="com.dakahler.tp.functionLib.tpOpenHistory();"    />
  </menupopup>
  <menupopup id="taskPopup">
-  <menuitem label="Tracking History..." insertafter="devToolsSeparator" oncommand="com.dakahler.tp.functionLib.tpOpenHistory();"    />
+  <menuitem label="Tracking History..." insertbefore="prefSep" oncommand="com.dakahler.tp.functionLib.tpOpenHistory();" />
  </menupopup>
  <toolbarpalette id="BrowserToolbarPalette">
   <toolbarbutton label="Add Tracking Links"
