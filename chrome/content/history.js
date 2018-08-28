@@ -5,34 +5,6 @@ var TrackPackage_history =
  {
   return(historyString.split(";"));
  },
- tpBuildHistoryString: function(historyArray)
- {
-  return(historyArray.join(";"));
- },
- tpGetStringFromHistoryContents: function()
- {
-  var myListbox = document.getElementById("historyListbox");
-  var finalString = "";
-  for (index = 0; index < myListbox.getRowCount(); index++)
-  {
-   var row = myListbox.getItemAtIndex(index);
-   var nodes = row.childNodes;
-   var rowString = "";
-   for (node = 0; node < nodes.length; node++)
-   {
-    if (node < nodes.length - 1)
-     rowString += nodes.item(node).localName + ",";
-    else
-     rowString += nodes.item(node).localName;
-   }
-   if (index < myListbox.getRowCount() - 1)
-    finalString += rowString + ",";
-   else
-    finalString += rowString;
-  }
-  return(finalString);
- },
- 
  tpHistoryTrack: function()
  {
   var myListbox = document.getElementById("historyListbox");
