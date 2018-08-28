@@ -1,7 +1,7 @@
 // Copyright Dave Kahler. Do not copy without permission.
 var TrackPackage_history =
 {
- tpBuildHistoryArray: function(historyString)
+ _tpBuildHistoryArray: function(historyString)
  {
   return(historyString.split(";"));
  },
@@ -88,7 +88,7 @@ var TrackPackage_history =
    }
   }
  },
- tpPopulateListBox: function(historyArray)
+ _tpPopulateListBox: function(historyArray)
  {
   var listBox = document.getElementById("historyListbox");
   var numElements = listBox.getRowCount();
@@ -173,8 +173,8 @@ var TrackPackage_history =
   var historyString = "";
   if (myTPPrefs.prefHasUserValue("tpTrackingHistory"))
    historyString = myTPPrefs.getCharPref("tpTrackingHistory");
-  var historyArray = TrackPackage_history.tpBuildHistoryArray(historyString);
-  TrackPackage_history.tpPopulateListBox(historyArray);
+  var historyArray = TrackPackage_history._tpBuildHistoryArray(historyString);
+  TrackPackage_history._tpPopulateListBox(historyArray);
   if (TrackPackage_functionLib.tpGetGMapsSetting() && (document.getElementById("mapButton") == undefined))
   {
    var menuitem = document.createElement('button');
@@ -319,7 +319,6 @@ var TrackPackage_history =
    }
    gClipboardHelper.copyString(clipStr.trim());
   }
-
  },
  tpClearHistory: function()
  {

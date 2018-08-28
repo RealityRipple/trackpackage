@@ -5,7 +5,7 @@ var TrackPackage_functionLib =
  URLDefaults: "\"USPS\",\"https://tools.usps.com/go/TrackConfirmAction_input?tLabels=\",\"\";\"UPS\",\"http://wwwapps.ups.com/etracking/tracking.cgi?InquiryNumber1=\",\"&TypeOfInquiryNumber=T&AcceptUPSLicenseAgreement=yes&submit=Track\";\"FedEx\",\"https://www.fedex.com/apps/fedextrack/?action=track&tracknumbers=\",\"&locale=en_US&cntry_code=us\"",
  gInThunderbird: false,
  gHasThunderbrowse: false,
- tpRemoveSpaces: function(myString)
+ _tpRemoveSpaces: function(myString)
  {
   var newString = "";
   var i;
@@ -30,7 +30,7 @@ var TrackPackage_functionLib =
    }
   }
  },
- searchSelected: function()
+ _searchSelected: function()
  {
   var node = document.popupNode;
   var selection = "";
@@ -64,21 +64,21 @@ var TrackPackage_functionLib =
    return(myTPPrefs.getBoolPref("tpSmartSense"));
   return true;
  },
- tpGetNotificationsSetting: function()
+ _tpGetNotificationsSetting: function()
  {
   var myTPPrefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage.");
   if(myTPPrefs.prefHasUserValue("tpNotifications"))
    return(myTPPrefs.getBoolPref("tpNotifications"));
   return true;
  },
- tpGetPrivateBrowsingSetting: function()
+ _tpGetPrivateBrowsingSetting: function()
  {
   var myTPPrefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage.");
   if(myTPPrefs.prefHasUserValue("tpPrivateBrowsing"))
    return(myTPPrefs.getBoolPref("tpPrivateBrowsing"));
   return true;
  },
- tpGetThunderbrowseSetting: function()
+ _tpGetThunderbrowseSetting: function()
  {
   var myTPPrefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage.");
   if(myTPPrefs.prefHasUserValue("tpUseThunderbrowse"))
@@ -92,7 +92,7 @@ var TrackPackage_functionLib =
    return(myTPPrefs.getBoolPref("tpEnableGMaps"));
   return false;
  },
- tpAllIndicesOf: function(character, string)
+ _tpAllIndicesOf: function(character, string)
  {
   var finalArray = new Array();
   for (var i = 0; i < string.length; i++)
@@ -104,10 +104,9 @@ var TrackPackage_functionLib =
   }
   return(finalArray);
  },
- tpGetHistoryArray: function()
+ _tpGetHistoryArray: function()
  {
   var myTPPrefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage.");
-  
   var historyString = "";
   if (myTPPrefs.prefHasUserValue("tpTrackingHistory"))
    historyString = myTPPrefs.getCharPref("tpTrackingHistory");
@@ -128,10 +127,9 @@ var TrackPackage_functionLib =
   }
   return historyArray;
  },
-
  tpExtractQuotedStrings: function(string)
  {
-  var quoteIndices = TrackPackage_functionLib.tpAllIndicesOf("\"", string);
+  var quoteIndices = TrackPackage_functionLib._tpAllIndicesOf("\"", string);
   if (quoteIndices.length % 2 != 0)
   {
    alert("Malformed preference! Contact webmaster@realityripple.com");
@@ -190,7 +188,7 @@ var TrackPackage_functionLib =
  },
  tpGetPackageCarrier: function(trackingString)
  {
-  var historyArray = TrackPackage_functionLib.tpGetHistoryArray();
+  var historyArray = TrackPackage_functionLib._tpGetHistoryArray();
   for (var i = 0; i < historyArray.length; i++)
   {
    if (historyArray[i]['TrackingNumber'] == trackingString)
@@ -213,8 +211,7 @@ var TrackPackage_functionLib =
   }
   return carrier;
  },
-
- tpIsInPrivateBrowsingMode: function()
+ _tpIsInPrivateBrowsingMode: function()
  {
   if (!TrackPackage_functionLib.gInThunderbird)
   {
@@ -246,26 +243,25 @@ var TrackPackage_functionLib =
   var trackingString = "";
   if (!TrackPackage_functionLib.gInThunderbird)
   {
-   trackingString = TrackPackage_functionLib.tpRemoveSpaces(TrackPackage_functionLib.searchSelected());
+   trackingString = TrackPackage_functionLib._tpRemoveSpaces(TrackPackage_functionLib._searchSelected());
   }
   else
   {
    if ((typeof gContextMenu == 'object') && gContextMenu.searchSelected)
    {
-    trackingString = TrackPackage_functionLib.tpRemoveSpaces(gContextMenu.searchSelected(40));
+    trackingString = TrackPackage_functionLib._tpRemoveSpaces(gContextMenu.searchSelected(40));
    }
    else if (typeof getBrowserSelection == 'function')
    {
-    trackingString = TrackPackage_functionLib.tpRemoveSpaces(getBrowserSelection(40));
+    trackingString = TrackPackage_functionLib._tpRemoveSpaces(getBrowserSelection(40));
    }
    else
    {
-    trackingString = TrackPackage_functionLib.tpRemoveSpaces(window._content.getSelection());
+    trackingString = TrackPackage_functionLib._tpRemoveSpaces(window._content.getSelection());
    }
   }
   return(trackingString);
  },
-
  tpRebuildDropdown: function()
  {
   var buttonMenu = document.getElementById("tpButtonMenu");
@@ -284,7 +280,7 @@ var TrackPackage_functionLib =
    var maxNumbersAllowed = 5;
    if (myTPPrefs.prefHasUserValue("tpMaxDropdownItems"))
     maxNumbersAllowed = myTPPrefs.getIntPref("tpMaxDropdownItems");
-   var tempArray = TrackPackage_functionLib.tpGetHistoryArray();
+   var tempArray = TrackPackage_functionLib._tpGetHistoryArray();
    if (tempArray.length == 0)
    {
     buttonMenu.type = "";
@@ -329,10 +325,9 @@ var TrackPackage_functionLib =
   win.focus();
   win.onunload = TrackPackage_functionLib.tpRebuildDropdown;
  },
-
- tpAddToHistory: function(carrier, trackingString)
+ _tpAddToHistory: function(carrier, trackingString)
  {
-  if (TrackPackage_functionLib.tpGetPrivateBrowsingSetting() && TrackPackage_functionLib.tpIsInPrivateBrowsingMode())
+  if (TrackPackage_functionLib._tpGetPrivateBrowsingSetting() && TrackPackage_functionLib._tpIsInPrivateBrowsingMode())
    return;
   var now = new Date();
   var finalDate = (now.getMonth()+1) + "/" + now.getDate() + "/" + now.getFullYear();
@@ -407,10 +402,9 @@ var TrackPackage_functionLib =
    }
   }
   if (addToHistory)
-   TrackPackage_functionLib.tpAddToHistory(carrier, trackingString);
+   TrackPackage_functionLib._tpAddToHistory(carrier, trackingString);
   return(windowURL);
  },
-
  tpButtonCallback: function(notification, button)
  {
   var regexURLArray = TrackPackage_functionLib.tpGetRegexURLArray();
@@ -424,7 +418,7 @@ var TrackPackage_functionLib =
    }
   }
  },
- tpShowNotificationBox: function(firstTry)
+ _tpShowNotificationBox: function(firstTry)
  {
   if (!TrackPackage_functionLib.gInThunderbird)
   {
@@ -450,7 +444,7 @@ var TrackPackage_functionLib =
      callback: TrackPackage_functionLib.tpButtonCallback
     };
    }
-   if (TrackPackage_functionLib.tpGetNotificationsSetting() || firstTry)
+   if (TrackPackage_functionLib._tpGetNotificationsSetting() || firstTry)
    {
     var originalTrackingString = TrackPackage_functionLib.tpGetTrackingString();
     var notifyBox = gBrowser.getNotificationBox();
@@ -473,7 +467,7 @@ var TrackPackage_functionLib =
   {
    if (TrackPackage_functionLib.gInThunderbird)
    {
-    if (!TrackPackage_functionLib.gHasThunderbrowse || !TrackPackage_functionLib.tpGetThunderbrowseSetting())
+    if (!TrackPackage_functionLib.gHasThunderbrowse || !TrackPackage_functionLib._tpGetThunderbrowseSetting())
     {
      var messenger = Components.classes["@mozilla.org/messenger;1"].createInstance();         
      messenger = messenger.QueryInterface(Components.interfaces.nsIMessenger);
@@ -517,13 +511,13 @@ var TrackPackage_functionLib =
     }
     if (offerCorrection)
     {
-     TrackPackage_functionLib.tpShowNotificationBox(false);
+     TrackPackage_functionLib._tpShowNotificationBox(false);
     }
    }
   }
   else
   {
-   TrackPackage_functionLib.tpShowNotificationBox(true);
+   TrackPackage_functionLib._tpShowNotificationBox(true);
   }
  },
  tpHistoryOpenMap: function(carrier, trackingString, forceTabs)
@@ -549,7 +543,6 @@ var TrackPackage_functionLib =
    TrackPackage_functionLib.tpOpenPackageWindow("", false, true, "");
   }
  },
-
  tpTrackGoogleMaps: function()
  {
   var trackingString = TrackPackage_functionLib.tpGetTrackingString();
@@ -559,8 +552,7 @@ var TrackPackage_functionLib =
   if (carrier.length)
   {
    TrackPackage_functionLib.tpOpenPackageWindow(gmapsURL, false, false, "");
-   TrackPackage_functionLib.tpAddToHistory(carrierOrig, trackingString);
+   TrackPackage_functionLib._tpAddToHistory(carrierOrig, trackingString);
   }
  }
- 
 };

@@ -1,27 +1,27 @@
 // Copyright Dave Kahler. Do not copy without permission.
 var TrackPackage_prefs =
 {
- tpPrefs: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage."),
- observerService: Components.classes["@mozilla.org/observer-service;1"].getService(Components.interfaces.nsIObserverService),
- tpXMLObject: null,
- tpLoadCheckSetting: function(pref, def)
+ _tpPrefs: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage."),
+ _observerService: Components.classes["@mozilla.org/observer-service;1"].getService(Components.interfaces.nsIObserverService),
+ _tpXMLObject: null,
+ _tpLoadCheckSetting: function(pref, def)
  {
-  if (TrackPackage_prefs.tpPrefs.prefHasUserValue(pref))
-   document.getElementById(pref).setAttribute("checked", TrackPackage_prefs.tpPrefs.getBoolPref(pref));
+  if (TrackPackage_prefs._tpPrefs.prefHasUserValue(pref))
+   document.getElementById(pref).setAttribute("checked", TrackPackage_prefs._tpPrefs.getBoolPref(pref));
   else
    document.getElementById(pref).setAttribute("checked", def);
  },
- tpLoadIntValueSetting: function(pref, def)
+ _tpLoadIntValueSetting: function(pref, def)
  {
-  if (TrackPackage_prefs.tpPrefs.prefHasUserValue(pref))
-   document.getElementById(pref).value = TrackPackage_prefs.tpPrefs.getIntPref(pref);
+  if (TrackPackage_prefs._tpPrefs.prefHasUserValue(pref))
+   document.getElementById(pref).value = TrackPackage_prefs._tpPrefs.getIntPref(pref);
   else
    document.getElementById(pref).value = def;
  },
- tpLoadCharValueSetting: function(pref, def)
+ _tpLoadCharValueSetting: function(pref, def)
  {
-  if (TrackPackage_prefs.tpPrefs.prefHasUserValue(pref))
-   document.getElementById(pref).setAttribute("value", TrackPackage_prefs.tpPrefs.getCharPref(pref));
+  if (TrackPackage_prefs._tpPrefs.prefHasUserValue(pref))
+   document.getElementById(pref).setAttribute("value", TrackPackage_prefs._tpPrefs.getCharPref(pref));
   else
    document.getElementById(pref).setAttribute("value", def);
  },
@@ -33,23 +33,23 @@ var TrackPackage_prefs =
    TrackPackage_functionLib.gInThunderbird = true;
   else
    TrackPackage_functionLib.gInThunderbird = false;
-  TrackPackage_prefs.tpLoadCheckSetting("tpCheckBox", true);
-  TrackPackage_prefs.tpLoadCheckSetting("tpSmartSense", true);
-  TrackPackage_prefs.tpLoadCheckSetting("tpNotifications", true);
-  TrackPackage_prefs.tpLoadCheckSetting("tpPrivateBrowsing", true);
-  TrackPackage_prefs.tpLoadCheckSetting("tpUseThunderbrowse", true);
-  TrackPackage_prefs.tpLoadIntValueSetting("tpMaxNumbers", 25);
-  TrackPackage_prefs.tpLoadIntValueSetting("tpMaxDropdownItems", 5);
-  TrackPackage_prefs.tpLoadCheckSetting("tpEnableGMaps", false);
-  TrackPackage_prefs.tpLoadCharValueSetting("tpUpdateURL", "https://realityripple.com/Software/Mozilla-Extensions/Track-Package/defaults.xml");
+  TrackPackage_prefs._tpLoadCheckSetting("tpCheckBox", true);
+  TrackPackage_prefs._tpLoadCheckSetting("tpSmartSense", true);
+  TrackPackage_prefs._tpLoadCheckSetting("tpNotifications", true);
+  TrackPackage_prefs._tpLoadCheckSetting("tpPrivateBrowsing", true);
+  TrackPackage_prefs._tpLoadCheckSetting("tpUseThunderbrowse", true);
+  TrackPackage_prefs._tpLoadIntValueSetting("tpMaxNumbers", 25);
+  TrackPackage_prefs._tpLoadIntValueSetting("tpMaxDropdownItems", 5);
+  TrackPackage_prefs._tpLoadCheckSetting("tpEnableGMaps", false);
+  TrackPackage_prefs._tpLoadCharValueSetting("tpUpdateURL", "https://realityripple.com/Software/Mozilla-Extensions/Track-Package/defaults.xml");
   if (!TrackPackage_functionLib.gInThunderbird)
   {
    document.getElementById("tpUseThunderbrowse").style.visibility = 'hidden';
    document.getElementById("tpUseThunderbrowse").style.display = 'none';
   }
   var regexesArray = TrackPackage_functionLib.regexDefaults.split(";");
-  if (TrackPackage_prefs.tpPrefs.prefHasUserValue("tpRegex"))
-   regexesArray = TrackPackage_prefs.tpPrefs.getCharPref("tpRegex").split(";");
+  if (TrackPackage_prefs._tpPrefs.prefHasUserValue("tpRegex"))
+   regexesArray = TrackPackage_prefs._tpPrefs.getCharPref("tpRegex").split(";");
   var regexListbox = document.getElementById("regexListbox");
   for (var i = 0; i < regexesArray.length; i++)
   {
@@ -69,8 +69,8 @@ var TrackPackage_prefs =
    regexListbox.appendChild(row);
   }
   var urlArray = TrackPackage_functionLib.URLDefaults.split(";");
-  if (TrackPackage_prefs.tpPrefs.prefHasUserValue("tpURL"))
-   urlArray = TrackPackage_prefs.tpPrefs.getCharPref("tpURL").split(";");
+  if (TrackPackage_prefs._tpPrefs.prefHasUserValue("tpURL"))
+   urlArray = TrackPackage_prefs._tpPrefs.getCharPref("tpURL").split(";");
   var urlListbox = document.getElementById("urlListbox");
   for (var i = 0; i < urlArray.length; i++)
   {
@@ -97,15 +97,15 @@ var TrackPackage_prefs =
  },
  tpSaveSettings: function()
  {
-  TrackPackage_prefs.tpPrefs.setBoolPref("tpCheckBox", document.getElementById("tpCheckBox").checked);
-  TrackPackage_prefs.tpPrefs.setBoolPref("tpSmartSense", document.getElementById("tpSmartSense").checked);
-  TrackPackage_prefs.tpPrefs.setBoolPref("tpNotifications", document.getElementById("tpNotifications").checked);
-  TrackPackage_prefs.tpPrefs.setBoolPref("tpPrivateBrowsing", document.getElementById("tpPrivateBrowsing").checked);
-  TrackPackage_prefs.tpPrefs.setBoolPref("tpUseThunderbrowse", document.getElementById("tpUseThunderbrowse").checked);
-  TrackPackage_prefs.tpPrefs.setIntPref("tpMaxNumbers", document.getElementById("tpMaxNumbers").value);
-  TrackPackage_prefs.tpPrefs.setIntPref("tpMaxDropdownItems", document.getElementById("tpMaxDropdownItems").value);
-  TrackPackage_prefs.tpPrefs.setBoolPref("tpEnableGMaps", document.getElementById("tpEnableGMaps").checked);
-  TrackPackage_prefs.tpPrefs.setCharPref("tpUpdateURL", document.getElementById("tpUpdateURL").value);
+  TrackPackage_prefs._tpPrefs.setBoolPref("tpCheckBox", document.getElementById("tpCheckBox").checked);
+  TrackPackage_prefs._tpPrefs.setBoolPref("tpSmartSense", document.getElementById("tpSmartSense").checked);
+  TrackPackage_prefs._tpPrefs.setBoolPref("tpNotifications", document.getElementById("tpNotifications").checked);
+  TrackPackage_prefs._tpPrefs.setBoolPref("tpPrivateBrowsing", document.getElementById("tpPrivateBrowsing").checked);
+  TrackPackage_prefs._tpPrefs.setBoolPref("tpUseThunderbrowse", document.getElementById("tpUseThunderbrowse").checked);
+  TrackPackage_prefs._tpPrefs.setIntPref("tpMaxNumbers", document.getElementById("tpMaxNumbers").value);
+  TrackPackage_prefs._tpPrefs.setIntPref("tpMaxDropdownItems", document.getElementById("tpMaxDropdownItems").value);
+  TrackPackage_prefs._tpPrefs.setBoolPref("tpEnableGMaps", document.getElementById("tpEnableGMaps").checked);
+  TrackPackage_prefs._tpPrefs.setCharPref("tpUpdateURL", document.getElementById("tpUpdateURL").value);
   var myRegListbox      = document.getElementById("regexListbox");
   var regexPrefArray    = new Array();
   var regexCarrierArray = new Array();
@@ -170,9 +170,9 @@ var TrackPackage_prefs =
     return false;
    }
   }
-  TrackPackage_prefs.tpPrefs.setCharPref("tpURL", urlPref);
-  TrackPackage_prefs.tpPrefs.setCharPref("tpRegex", regexPref);
-  TrackPackage_prefs.observerService.notifyObservers(null, "trackpackage-settings", "changed");
+  TrackPackage_prefs._tpPrefs.setCharPref("tpURL", urlPref);
+  TrackPackage_prefs._tpPrefs.setCharPref("tpRegex", regexPref);
+  TrackPackage_prefs._observerService.notifyObservers(null, "trackpackage-settings", "changed");
   return true;
  },
  tpAddNewRegex: function()
@@ -218,7 +218,7 @@ var TrackPackage_prefs =
  {
   if(!confirm("Are you sure you want to reset the Tracking Number Detections to default? This cannot be undone!"))
    return;
-  TrackPackage_prefs.tpPrefs.setCharPref("tpRegex", TrackPackage_functionLib.regexDefaults);
+  TrackPackage_prefs._tpPrefs.setCharPref("tpRegex", TrackPackage_functionLib.regexDefaults);
   var regexListbox = document.getElementById("regexListbox");
   var numElements = regexListbox.getRowCount();
   for (var index = 0; index < numElements; index++)
@@ -244,7 +244,7 @@ var TrackPackage_prefs =
  {
   if(!confirm("Are you sure you want to reset the Service URLs to default? This cannot be undone!"))
    return;
-  TrackPackage_prefs.tpPrefs.setCharPref("tpURL", TrackPackage_functionLib.URLDefaults);
+  TrackPackage_prefs._tpPrefs.setCharPref("tpURL", TrackPackage_functionLib.URLDefaults);
   var urlListbox  = document.getElementById("urlListbox");
   var numElements = urlListbox.getRowCount();
   for (var index = 0; index < numElements; index++)
@@ -306,26 +306,26 @@ var TrackPackage_prefs =
    foStream.close();
   }
  },
- xmlLoadError: function()
+ _xmlLoadError: function()
  {
   alert("Error loading XML file. Check the URL or try again later.");
  },
  processXML: function(xmlDoc)
  {
-  if (!TrackPackage_prefs.tpXMLObject.responseXML)
+  if (!TrackPackage_prefs._tpXMLObject.responseXML)
   {
-   TrackPackage_prefs.xmlLoadError();
+   TrackPackage_prefs._xmlLoadError();
    return;
   }
-  var rootNode = TrackPackage_prefs.tpXMLObject.responseXML.firstChild;
+  var rootNode = TrackPackage_prefs._tpXMLObject.responseXML.firstChild;
   if (!rootNode)
   {
-   TrackPackage_prefs.xmlLoadError()
+   TrackPackage_prefs._xmlLoadError()
    return;
   }
   if (rootNode.nodeName == "parsererror")
   {
-   TrackPackage_prefs.xmlLoadError()
+   TrackPackage_prefs._xmlLoadError()
    return;
   }
   var nodes      = rootNode.childNodes;
@@ -351,8 +351,8 @@ var TrackPackage_prefs =
   }
   var finalRegexString = regexArray.join(";");
   var finalURLString   = urlArray.join(";");
-  TrackPackage_prefs.tpPrefs.setCharPref("tpRegex", finalRegexString);
-  TrackPackage_prefs.tpPrefs.setCharPref("tpURL", finalURLString);
+  TrackPackage_prefs._tpPrefs.setCharPref("tpRegex", finalRegexString);
+  TrackPackage_prefs._tpPrefs.setCharPref("tpURL", finalURLString);
   var regexListbox = document.getElementById("regexListbox");
   var numElements  = regexListbox.getRowCount();
   for (var index = 0; index < numElements; index++)
@@ -375,11 +375,11 @@ var TrackPackage_prefs =
   var xmldoc = document.implementation.createDocument("", "", null);
   xmldoc.addEventListener("load", function(event){TrackPackage_prefs.processXML(event.currentTarget)}, false);
   var req = new XMLHttpRequest();
-  TrackPackage_prefs.tpXMLObject = req;
+  TrackPackage_prefs._tpXMLObject = req;
   req.open('GET', document.getElementById("tpUpdateURL").value, false);
   req.channel.loadFlags |= Components.interfaces.nsIRequest.LOAD_BYPASS_CACHE;
   req.onload = TrackPackage_prefs.processXML;
-  req.onerror = TrackPackage_prefs.xmlLoadError;
+  req.onerror = TrackPackage_prefs._xmlLoadError;
   req.send(null);
  }
 };
