@@ -379,7 +379,7 @@ var TrackPackage_prefs =
   xmldoc.addEventListener("load", function(event){TrackPackage_prefs.processXML(event.currentTarget);}, false);
   var req = new XMLHttpRequest();
   TrackPackage_prefs._tpXMLObject = req;
-  req.open('GET', document.getElementById("tpUpdateURL").value, false);
+  req.open('GET', document.getElementById("tpUpdateURL").value, true);
   req.channel.loadFlags |= Components.interfaces.nsIRequest.LOAD_BYPASS_CACHE;
   req.onload = TrackPackage_prefs.processXML;
   req.onerror = TrackPackage_prefs._xmlLoadError;
