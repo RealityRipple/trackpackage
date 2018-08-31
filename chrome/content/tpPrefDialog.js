@@ -27,9 +27,8 @@ var TrackPackage_prefs =
  },
  tpLoadSettings: function()
  {
-  const THUNDERBIRD_ID = "{3550f703-e582-4d05-9a08-453d09bdfdc6}";
   var appInfo = Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULAppInfo);
-  if (appInfo.ID == THUNDERBIRD_ID)
+  if (appInfo.ID == "{3550f703-e582-4d05-9a08-453d09bdfdc6}")
    TrackPackage_functionLib.gInThunderbird = true;
   else
    TrackPackage_functionLib.gInThunderbird = false;
@@ -51,16 +50,17 @@ var TrackPackage_prefs =
   if (TrackPackage_prefs._tpPrefs.prefHasUserValue("tpRegex"))
    regexesArray = TrackPackage_prefs._tpPrefs.getCharPref("tpRegex").split(";");
   var regexListbox = document.getElementById("regexListbox");
-  for (var i = 0; i < regexesArray.length; i++)
+  var carrierCell;
+  var row;
+  var i;
+  for (i = 0; i < regexesArray.length; i++)
   {
    var carrierRegex = TrackPackage_functionLib.tpExtractQuotedStrings(regexesArray[i]);
    if (carrierRegex == "")
     return;
-   var newCarrierField = document.createElement("textbox");
-   var newRegexField   = document.createElement("textbox");
-   var row             = document.createElement('listitem');
-   var carrierCell     = document.createElement('textbox');
-   var regexCell       = document.createElement('textbox');
+   row           = document.createElement('listitem');
+   carrierCell   = document.createElement('textbox');
+   var regexCell = document.createElement('textbox');
    row.setAttribute('allowevents',true);
    carrierCell.setAttribute('value', carrierRegex[0] );
    regexCell.setAttribute('value', carrierRegex[1] );
@@ -72,18 +72,15 @@ var TrackPackage_prefs =
   if (TrackPackage_prefs._tpPrefs.prefHasUserValue("tpURL"))
    urlArray = TrackPackage_prefs._tpPrefs.getCharPref("tpURL").split(";");
   var urlListbox = document.getElementById("urlListbox");
-  for (var i = 0; i < urlArray.length; i++)
+  for (i = 0; i < urlArray.length; i++)
   {
    var carrierURL = TrackPackage_functionLib.tpExtractQuotedStrings(urlArray[i]);
    if (carrierURL == "")
     continue;
-   var newCarrierField  = document.createElement("textbox");
-   var newURLFrontField = document.createElement("textbox");
-   var newURLBackField  = document.createElement("textbox");
-   var row              = document.createElement('listitem');
-   var carrierCell      = document.createElement('textbox');
-   var urlFrontCell     = document.createElement('textbox');
-   var urlBackCell      = document.createElement('textbox');
+   row              = document.createElement('listitem');
+   carrierCell      = document.createElement('textbox');
+   var urlFrontCell = document.createElement('textbox');
+   var urlBackCell  = document.createElement('textbox');
    row.setAttribute('allowevents',true);
    carrierCell.setAttribute('value', carrierURL[0] );
    urlFrontCell.setAttribute('value', carrierURL[1] );
@@ -107,14 +104,18 @@ var TrackPackage_prefs =
   TrackPackage_prefs._tpPrefs.setBoolPref("tpEnableGMaps", document.getElementById("tpEnableGMaps").checked);
   TrackPackage_prefs._tpPrefs.setCharPref("tpUpdateURL", document.getElementById("tpUpdateURL").value);
   var myRegListbox      = document.getElementById("regexListbox");
-  var regexPrefArray    = new Array();
-  var regexCarrierArray = new Array();
+  var regexPrefArray    = [];
+  var regexCarrierArray = [];
   var regCount          = myRegListbox.getRowCount();
-  for (var index = 0; index < regCount; index++)
+  var index;
+  var item;
+  var nodes;
+  var carrier;
+  for (index = 0; index < regCount; index++)
   {
-   var item    = myRegListbox.getItemAtIndex(index);
-   var nodes   = item.childNodes;
-   var carrier = nodes.item(0).value;
+   item        = myRegListbox.getItemAtIndex(index);
+   nodes       = item.childNodes;
+   carrier     = nodes.item(0).value;
    if (carrier == undefined)
     carrier    = nodes.item(0).getAttribute("value");
    var regex   = nodes.item(1).value;  
@@ -125,14 +126,14 @@ var TrackPackage_prefs =
   }
   var regexPref       = regexPrefArray.join(";");
   var myURLListbox    = document.getElementById("urlListbox");
-  var urlPrefArray    = new Array();
-  var urlCarrierArray = new Array();
-  var urlCount        = myURLListbox.getRowCount()
-  for (var index = 0; index < urlCount; index++)
+  var urlPrefArray    = [];
+  var urlCarrierArray = [];
+  var urlCount        = myURLListbox.getRowCount();
+  for (index = 0; index < urlCount; index++)
   {
-   var item     = myURLListbox.getItemAtIndex(index);
-   var nodes    = item.childNodes;
-   var carrier  = nodes.item(0).value;
+   item         = myURLListbox.getItemAtIndex(index);
+   nodes        = item.childNodes;
+   carrier      = nodes.item(0).value;
    if (carrier  == undefined)
     carrier     = nodes.item(0).getAttribute("value");
    var urlFront = nodes.item(1).value;
@@ -271,10 +272,9 @@ var TrackPackage_prefs =
  },
  tpSaveXML: function()
  {
-  const nsIFilePicker = Components.interfaces.nsIFilePicker;
-  var filePicker   = Components.classes["@mozilla.org/filepicker;1"].createInstance(nsIFilePicker);
+  var filePicker   = Components.classes["@mozilla.org/filepicker;1"].createInstance(Components.interfaces.nsIFilePicker);
   filePicker.init(window, "Save As", filePicker.modeSave);
-  filePicker.appendFilters(nsIFilePicker.filterXML);
+  filePicker.appendFilters(Components.interfaces.nsIFilePicker.filterXML);
   filePicker.defaultExtension = "xml";
   filePicker.defaultString = "customXML";
   var result = filePicker.show();
@@ -283,14 +283,15 @@ var TrackPackage_prefs =
    var finalXML = "<?xml version=\"1.0\"?>\n\n";
    finalXML += "<trackpackage>\n\n";
    var regexURLArray = TrackPackage_functionLib.tpGetRegexURLArray();
-   for (var i = 0; i < regexURLArray.length; i++)
+   var i;
+   for (i = 0; i < regexURLArray.length; i++)
    {
     if (regexURLArray[i][1] == "")
      continue;
     finalXML += "\t<regex carrier=\"" + regexURLArray[i][0] + "\" value=\"" + regexURLArray[i][1] + "\" />\n";
    }
    finalXML += "\n";
-   for (var i = 0; i < regexURLArray.length; i++)
+   for (i = 0; i < regexURLArray.length; i++)
    {
     finalXML += "\t<url carrier=\"" + regexURLArray[i][0] + "\" front=\"" + regexURLArray[i][2] + "\" back=\"" + regexURLArray[i][3] + "\" />\n";
    }
@@ -320,32 +321,33 @@ var TrackPackage_prefs =
   var rootNode = TrackPackage_prefs._tpXMLObject.responseXML.firstChild;
   if (!rootNode)
   {
-   TrackPackage_prefs._xmlLoadError()
+   TrackPackage_prefs._xmlLoadError();
    return;
   }
   if (rootNode.nodeName == "parsererror")
   {
-   TrackPackage_prefs._xmlLoadError()
+   TrackPackage_prefs._xmlLoadError();
    return;
   }
   var nodes      = rootNode.childNodes;
-  var regexArray = new Array();
-  var urlArray   = new Array();
+  var regexArray = [];
+  var urlArray   = [];
   for (var i = 0; i < nodes.length; i++)
   {
    var node = nodes.item(i);
    var name = node.nodeName;
+   var carrier;
    if (name == "regex")
    {
-    var carrier = node.getAttribute("carrier");
-    var value   = node.getAttribute("value");
+    carrier   = node.getAttribute("carrier");
+    var value = node.getAttribute("value");
     regexArray[regexArray.length] = "\"" + carrier + "\",\"" + value + "\"";
    }
    if (name == "url")
    {
-    var carrier = node.getAttribute("carrier");
-    var front   = node.getAttribute("front");
-    var back    = node.getAttribute("back");
+    carrier   = node.getAttribute("carrier");
+    var front = node.getAttribute("front");
+    var back  = node.getAttribute("back");
     urlArray[urlArray.length] = "\"" + carrier + "\",\"" + front + "\",\"" + back + "\"";
    }
   }
@@ -355,13 +357,14 @@ var TrackPackage_prefs =
   TrackPackage_prefs._tpPrefs.setCharPref("tpURL", finalURLString);
   var regexListbox = document.getElementById("regexListbox");
   var numElements  = regexListbox.getRowCount();
-  for (var index = 0; index < numElements; index++)
+  var index;
+  for (index = 0; index < numElements; index++)
   {
    regexListbox.removeItemAt(0);
   }
   var urlListbox  = document.getElementById("urlListbox");
-  var numElements = urlListbox.getRowCount();
-  for (var index = 0; index < numElements; index++)
+  numElements = urlListbox.getRowCount();
+  for (index = 0; index < numElements; index++)
   {
    urlListbox.removeItemAt(0);
   }
@@ -373,7 +376,7 @@ var TrackPackage_prefs =
   if(!confirm("Are you sure you want to update definitions from the Internet?\nThis will overwrite all your current Tracking Number Definitions and Service URLs and cannot be undone."))
    return;
   var xmldoc = document.implementation.createDocument("", "", null);
-  xmldoc.addEventListener("load", function(event){TrackPackage_prefs.processXML(event.currentTarget)}, false);
+  xmldoc.addEventListener("load", function(event){TrackPackage_prefs.processXML(event.currentTarget);}, false);
   var req = new XMLHttpRequest();
   TrackPackage_prefs._tpXMLObject = req;
   req.open('GET', document.getElementById("tpUpdateURL").value, false);

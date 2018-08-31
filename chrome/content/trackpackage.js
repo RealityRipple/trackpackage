@@ -55,10 +55,9 @@ var TrackPackage_overlay =
  tpInit: function()
  {
   TrackPackage_overlay.register();
-  const THUNDERBIRD_ID = "{3550f703-e582-4d05-9a08-453d09bdfdc6}";
   var appInfo = Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULAppInfo);
   var tpHidePtr = TrackPackage_overlay.tpHide;
-  if (appInfo.ID == THUNDERBIRD_ID)
+  if (appInfo.ID == "{3550f703-e582-4d05-9a08-453d09bdfdc6}")
   {
    TrackPackage_functionLib.gInThunderbird = true;
    if (document.getElementById("messagePaneContext") != null)
@@ -105,8 +104,8 @@ var TrackPackage_overlay =
   }
   if (target.historyInfo != undefined)
   {
-   var carrier = target.historyInfo['Carrier'];
-   var trackingString = target.historyInfo['TrackingNumber'];
+   var carrier = target.historyInfo.Carrier;
+   var trackingString = target.historyInfo.TrackingNumber;
    var title = carrier + ": " + trackingString;
    TrackPackage_functionLib.tpOpenPackageWindow(TrackPackage_functionLib.tpGetPackageURL(carrier, trackingString, false), false, false, title);
   }

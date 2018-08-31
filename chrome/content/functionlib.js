@@ -94,7 +94,7 @@ var TrackPackage_functionLib =
  },
  _tpAllIndicesOf: function(character, string)
  {
-  var finalArray = new Array();
+  var finalArray = [];
   for (var i = 0; i < string.length; i++)
   {
    if (string[i] == character)
@@ -111,18 +111,18 @@ var TrackPackage_functionLib =
   if (myTPPrefs.prefHasUserValue("tpTrackingHistory"))
    historyString = myTPPrefs.getCharPref("tpTrackingHistory");
   var historySplit = historyString.split(";");
-  var historyArray = new Array();
+  var historyArray = [];
   if (historyString.length > 0)
   {
    for (var index=0;index<historySplit.length;index++)
    {
     var rowString = historySplit[index];
     var rowArray = rowString.split(",");
-    historyArray[index] = new Array();
-    historyArray[index]['Carrier'] = rowArray[0];
-    historyArray[index]['TrackingNumber'] = rowArray[1];
-    historyArray[index]['Date'] = rowArray[2];
-    historyArray[index]['Notes'] = rowArray[3];
+    historyArray[index] = [];
+    historyArray[index].Carrier = rowArray[0];
+    historyArray[index].TrackingNumber = rowArray[1];
+    historyArray[index].Date = rowArray[2];
+    historyArray[index].Notes = rowArray[3];
    }
   }
   return historyArray;
@@ -135,7 +135,7 @@ var TrackPackage_functionLib =
    alert("Malformed preference! Contact webmaster@realityripple.com");
    return("");
   }
-  var finalArray = new Array();
+  var finalArray = [];
   for (var i = 0; i < quoteIndices.length; i += 2)
   {
    var thisQuote = string.substring(quoteIndices[i]+1, quoteIndices[i+1]);
@@ -145,23 +145,25 @@ var TrackPackage_functionLib =
  },
  tpGetRegexURLArray: function()
  {
+  var i;
   var tpPrefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage.");
   var regexesArray = TrackPackage_functionLib.regexDefaults.split(";");
   if (tpPrefs.prefHasUserValue("tpRegex"))
    regexesArray = tpPrefs.getCharPref("tpRegex").split(";");
-  var finalArray = new Array();
-  for (var i = 0; i < regexesArray.length; i++)
+  var finalArray = [];
+  var currentIndex;
+  for (i = 0; i < regexesArray.length; i++)
   {
    var carrierRegex = TrackPackage_functionLib.tpExtractQuotedStrings(regexesArray[i]);
-   var currentIndex = finalArray.length;
-   finalArray[currentIndex] = new Array();
+   currentIndex = finalArray.length;
+   finalArray[currentIndex] = [];
    finalArray[currentIndex][0] = carrierRegex[0];
    finalArray[currentIndex][1] = carrierRegex[1];
   }
   var urlArray =TrackPackage_functionLib.URLDefaults.split(";");
   if (tpPrefs.prefHasUserValue("tpURL"))
    urlArray = tpPrefs.getCharPref("tpURL").split(";");
-  for (var i = 0; i < urlArray.length; i++)
+  for (i = 0; i < urlArray.length; i++)
   {
    var carrierURL = TrackPackage_functionLib.tpExtractQuotedStrings(urlArray[i]);
    var foundRegexMatch = false;
@@ -176,8 +178,8 @@ var TrackPackage_functionLib =
    }
    if (!foundRegexMatch)
    {
-    var currentIndex = finalArray.length;
-    finalArray[currentIndex] = new Array();
+    currentIndex = finalArray.length;
+    finalArray[currentIndex] = [];
     finalArray[currentIndex][0] = carrierURL[0];
     finalArray[currentIndex][1] = "";
     finalArray[currentIndex][2] = carrierURL[1];
@@ -188,17 +190,18 @@ var TrackPackage_functionLib =
  },
  tpGetPackageCarrier: function(trackingString)
  {
+  var i;
   var historyArray = TrackPackage_functionLib._tpGetHistoryArray();
-  for (var i = 0; i < historyArray.length; i++)
+  for (i = 0; i < historyArray.length; i++)
   {
-   if (historyArray[i]['TrackingNumber'] == trackingString)
+   if (historyArray[i].TrackingNumber == trackingString)
    {
-    return historyArray[i]['Carrier'];
+    return historyArray[i].Carrier;
    }
   }
   var regexURLArray = TrackPackage_functionLib.tpGetRegexURLArray();
   var carrier;
-  for (var i = 0; i < regexURLArray.length; i++)
+  for (i = 0; i < regexURLArray.length; i++)
   {
    if (regexURLArray[i][1] == "")
     continue;
@@ -215,22 +218,22 @@ var TrackPackage_functionLib =
  {
   if (!TrackPackage_functionLib.gInThunderbird)
   {
-   let pbService;
-   let PrivateBrowsingUtils;
+   var pbService;
+   var PrivateBrowsingUtils;
    try
    {
-    pbService = Cc["@mozilla.org/privatebrowsing;1"].getService(Ci.nsIPrivateBrowsingService);
+    pbService = Components.classes["@mozilla.org/privatebrowsing;1"].getService(Components.interfaces.nsIPrivateBrowsingService);
     if (!('privateBrowsingEnabled' in pbService))
      pbService = undefined;
    }
    catch(e) { }
    try
    {
-    PrivateBrowsingUtils = Cu.import('resource://gre/modules/PrivateBrowsingUtils.jsm', {}).PrivateBrowsingUtils;
+    PrivateBrowsingUtils = Components.utils.import('resource://gre/modules/PrivateBrowsingUtils.jsm', {}).PrivateBrowsingUtils;
    }
    catch(e) { }
-   let isGlobalPBSupported = !!pbService;
-   let isWindowPBSupported = !isGlobalPBSupported && !!PrivateBrowsingUtils;
+   var isGlobalPBSupported = !!pbService;
+   var isWindowPBSupported = !isGlobalPBSupported && !!PrivateBrowsingUtils;
    if (isWindowPBSupported)
     return PrivateBrowsingUtils.isWindowPrivate(document.commandDispatcher.focusedWindow);
    else if (isGlobalPBSupported)
@@ -363,7 +366,7 @@ var TrackPackage_functionLib =
     }
    }
    i++;
-   finalString = currentHistoryString.replace(currentHistoryString.substr(i, j - i), carrier + "," + trackingString)
+   finalString = currentHistoryString.replace(currentHistoryString.substr(i, j - i), carrier + "," + trackingString);
   }
   else
   {
@@ -422,9 +425,10 @@ var TrackPackage_functionLib =
  {
   if (!TrackPackage_functionLib.gInThunderbird)
   {
+   var i;
    var notifyBox = gBrowser.getNotificationBox();
    var allNotifications = notifyBox.allNotifications;
-   for (var i = 0; i < allNotifications.length; i++)
+   for (i = 0; i < allNotifications.length; i++)
    {
     var item = allNotifications[i];
     if (item.label.match("Track Package") || item.label.match("Tracked Package"))
@@ -432,9 +436,9 @@ var TrackPackage_functionLib =
      item.close();
     }
    }
-   var buttons = new Array();
+   var buttons = [];
    var regexURLArray = TrackPackage_functionLib.tpGetRegexURLArray();
-   for (var i = 0; i < regexURLArray.length; i++)
+   for (i = 0; i < regexURLArray.length; i++)
    {
     var carrier = regexURLArray[i][0];
     buttons[i] = 
@@ -447,7 +451,6 @@ var TrackPackage_functionLib =
    if (TrackPackage_functionLib._tpGetNotificationsSetting() || firstTry)
    {
     var originalTrackingString = TrackPackage_functionLib.tpGetTrackingString();
-    var notifyBox = gBrowser.getNotificationBox();
     var notifyText;
     if (firstTry)
     {

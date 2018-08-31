@@ -14,7 +14,6 @@ var TrackPackage_history =
    var nodes          = items[index].childNodes;
    var carrier        =  nodes.item(0).getAttribute("label");
    var trackingString =  nodes.item(1).getAttribute("label");
-   var date           =  nodes.item(2).getAttribute("label");
    var url            = TrackPackage_functionLib.tpGetPackageURL(carrier,trackingString,false);
    if (url != "")
    {
@@ -34,20 +33,28 @@ var TrackPackage_history =
  },
  tpHistoryDelete: function(e)
  {
+  var myListbox;
+  var nodes;
+  var carrier;
+  var trackingString;
+  var date;
+  var info;
+  var trackID;
+  var sConfirm;
   if (e === undefined)
   {
-   var myListbox = document.getElementById("historyListbox");
+   myListbox = document.getElementById("historyListbox");
    if (myListbox.selectedIndex != -1)
    {
-    var sConfirm = "Are you sure you want to delete the selected Tracking Numbers?";
+    sConfirm = "Are you sure you want to delete the selected Tracking Numbers?";
     if (myListbox.selectedItems.length == 1)
     {
-     var nodes          = myListbox.selectedItem.childNodes;
-     var carrier        = nodes.item(0).getAttribute('label');
-     var trackingString = nodes.item(1).getAttribute('label');
-     var date           = nodes.item(2).getAttribute('label');
-     var info           = nodes.item(3).value;
-     var trackID = '';
+     nodes          = myListbox.selectedItem.childNodes;
+     carrier        = nodes.item(0).getAttribute('label');
+     trackingString = nodes.item(1).getAttribute('label');
+     date           = nodes.item(2).getAttribute('label');
+     info           = nodes.item(3).value;
+     trackID = '';
      if (info == '')
       trackID = carrier + ' ' + trackingString;
      else
@@ -66,20 +73,20 @@ var TrackPackage_history =
   }
   else if (e.which == 1)
   {
-   var myListbox = document.getElementById("historyListbox");
+   myListbox = document.getElementById("historyListbox");
    if (myListbox.currentIndex!=-1)
    {
-    var nodes          = myListbox.currentItem.childNodes;
-    var carrier        = nodes.item(0).getAttribute('label');
-    var trackingString = nodes.item(1).getAttribute('label');
-    var date           = nodes.item(2).getAttribute('label');
-    var info           = nodes.item(3).value;
-    var trackID = '';
+    nodes          = myListbox.currentItem.childNodes;
+    carrier        = nodes.item(0).getAttribute('label');
+    trackingString = nodes.item(1).getAttribute('label');
+    date           = nodes.item(2).getAttribute('label');
+    info           = nodes.item(3).value;
+    trackID = '';
     if (info == '')
      trackID = carrier + ' ' + trackingString;
     else
      trackID = info + ' [' + carrier + ': ' + trackingString + ']';
-    var sConfirm = "Are you sure you want to delete this Tracking Number?";
+    sConfirm = "Are you sure you want to delete this Tracking Number?";
     if (trackID != '')
      sConfirm = "Are you sure you want to delete " + trackID + "?";
     if(!confirm(sConfirm))
@@ -92,11 +99,12 @@ var TrackPackage_history =
  {
   var listBox = document.getElementById("historyListbox");
   var numElements = listBox.getRowCount();
-  for (var index = 0; index < numElements; index++)
+  var index;
+  for (index = 0; index < numElements; index++)
   {
    listBox.removeItemAt(0);
   }
-  for (var index = 0; index < historyArray.length; index++)
+  for (index = 0; index < historyArray.length; index++)
   {
    var rowString = historyArray[index];
    var rowArray = rowString.split(",");
@@ -105,14 +113,14 @@ var TrackPackage_history =
    row.setAttribute('allowevents',true);
    for (var cellIndex = 0;cellIndex < numItems; cellIndex++)
    {
+    var cell;
     if (cellIndex == 0)
     {
-     var cell = document.createElement('menulist');
+     cell = document.createElement('menulist');
      var menupopup = document.createElement('menupopup');
      cell.appendChild(menupopup);
      var regexURLArray = TrackPackage_functionLib.tpGetRegexURLArray();
      var carrier;
-     var sIndex = 0;
      for (var i = 0; i < regexURLArray.length; i++)
      {
       if (regexURLArray[i][1] == "" && carrier.length == 0)
@@ -128,7 +136,7 @@ var TrackPackage_history =
     }
     else if (cellIndex < numItems - 1)
     {
-     var cell = document.createElement('listcell');
+     cell = document.createElement('listcell');
      if (rowArray[cellIndex]==undefined)
       return;
      cell.setAttribute('label', rowArray[cellIndex]);
@@ -231,7 +239,6 @@ var TrackPackage_history =
      var nodes          = myListbox.selectedItem.childNodes;
      var carrier        = nodes.item(0).getAttribute('label');
      var trackingString = nodes.item(1).getAttribute('label');
-     var date           = nodes.item(2).getAttribute('label');
      var info           = nodes.item(3).value;
      var trackID = '';
      if (info == '')
@@ -254,7 +261,7 @@ var TrackPackage_history =
  onCloseHistory: function()
  {
   var myListbox = document.getElementById("historyListbox");
-  var historyArray = new Array();
+  var historyArray = [];
   for (var index = 0; index < myListbox.getRowCount(); index++)
   {
    var item           = myListbox.getItemAtIndex(index);
@@ -282,7 +289,6 @@ var TrackPackage_history =
    var nodes          = items[index].childNodes;
    var carrier        = nodes.item(0).getAttribute("label");
    var trackingString = nodes.item(1).getAttribute("label");
-   var date           = nodes.item(2).getAttribute("label");
    if (items.length > 1)
    {
     TrackPackage_functionLib.tpHistoryOpenMap(carrier,trackingString,true);
@@ -301,10 +307,12 @@ var TrackPackage_history =
   const gClipboardHelper = Components.classes["@mozilla.org/widget/clipboardhelper;1"].getService(Components.interfaces.nsIClipboardHelper);
   var myListbox  = document.getElementById("historyListbox");
   var items      = myListbox.selectedItems;
+  var nodes;
+  var trackingString;
   if (items.length == 1)
   {
-   var nodes          = items[0].childNodes;
-   var trackingString = nodes.item(1).getAttribute("label");
+   nodes          = items[0].childNodes;
+   trackingString = nodes.item(1).getAttribute("label");
    gClipboardHelper.copyString(trackingString);
   }
   else
@@ -312,9 +320,9 @@ var TrackPackage_history =
    var clipStr = "";
    for (var index = 0; index < items.length; index++)
    {
-    var nodes          = items[index].childNodes;
-    var carrier        = nodes.item(0).getAttribute("label");
-    var trackingString = nodes.item(1).getAttribute("label");
+    nodes          = items[index].childNodes;
+    var carrier    = nodes.item(0).getAttribute("label");
+    trackingString = nodes.item(1).getAttribute("label");
     clipStr += carrier + ": " + trackingString + "\n";
    }
    gClipboardHelper.copyString(clipStr.trim());
