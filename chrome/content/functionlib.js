@@ -258,9 +258,14 @@ var TrackPackage_functionLib =
    {
     trackingString = TrackPackage_functionLib._tpRemoveSpaces(getBrowserSelection(40));
    }
-   else
+   else if (typeof window._content != 'undefined')
    {
     trackingString = TrackPackage_functionLib._tpRemoveSpaces(window._content.getSelection());
+   }
+   else
+   {
+    var thisselection = document.commandDispatcher.focusedWindow.getSelection();
+    trackingString = thisselection.toString();
    }
   }
   return(trackingString);
