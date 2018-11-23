@@ -331,6 +331,20 @@ var TrackPackage_history =
    gClipboardHelper.copyString(clipStr.trim());
   }
  },
+ tpAddToHistory: function()
+ {
+  var trackingString = prompt("Enter your Tracking Number:", "");
+  if (trackingString == '' || trackingString == null)
+   return;
+  var carrier = TrackPackage_functionLib.tpGetPackageCarrier(trackingString);
+  TrackPackage_functionLib._tpAddToHistory(carrier, trackingString);
+  var myTPPrefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage.");
+  var historyString = "";
+  if (myTPPrefs.prefHasUserValue("tpTrackingHistory"))
+   historyString = myTPPrefs.getCharPref("tpTrackingHistory");
+  var historyArray = TrackPackage_history._tpBuildHistoryArray(historyString);
+  TrackPackage_history._tpPopulateListBox(historyArray);
+ },
  tpClearHistory: function()
  {
   var myTPPrefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.trackpackage.");

@@ -5,7 +5,7 @@
         orient="horizontal"
         onclose="TrackPackage_history.onCloseHistory()"
         onresize="TrackPackage_history.onResizeHistory()"
-        minwidth="560"
+        minwidth="620"
         minheight="150"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
  <script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js"/>
@@ -37,7 +37,8 @@
    </listcols>
   </listbox>
   <hbox id="buttonhbox">
-   <button label="Clear Tracking History" onclick="TrackPackage_history.tpClearHistory()" style="width: 170px; height: 30px;"/>
+   <button label="Add Number" onclick="TrackPackage_history.tpAddToHistory()" style="width: 110px; height: 30px;"/>
+   <button label="Clear History" onclick="TrackPackage_history.tpClearHistory()" style="width: 110px; height: 30px;"/>
    <button label="Options" onclick="TrackPackage_history.tpOpenHistoryOptions()" style="width: 110px; height: 30px;"/>
    <spacer flex="1"/>
    <button label="Track Selected" onclick="TrackPackage_history.tpHistoryTrack()" style="width: 120px; height: 30px;"/>
