@@ -69,6 +69,7 @@ var TrackPackage_history =
     {
      myListbox.removeItemAt(myListbox.selectedIndex);
     }
+    TrackPackage_history.onCloseHistory();
    }
   }
   else if (e.which == 1)
@@ -92,6 +93,7 @@ var TrackPackage_history =
     if(!confirm(sConfirm))
      return;
     myListbox.removeItemAt(myListbox.currentIndex);
+    TrackPackage_history.onCloseHistory();
    }
   }
  },
@@ -255,6 +257,7 @@ var TrackPackage_history =
     {
      myListbox.removeItemAt(myListbox.selectedIndex);
     }
+    TrackPackage_history.onCloseHistory();
    }
   }
  },
@@ -342,6 +345,7 @@ var TrackPackage_history =
     {
      listBox.removeItemAt(0);
     }
+    TrackPackage_history.onCloseHistory();
    }
   }
  },
