@@ -188,6 +188,78 @@ var TrackPackage_functionLib =
   }
   return(finalArray);
  },
+ tpVerifyPackageFedEx: function(trackingString)
+ {
+  if (trackingString.length === 12)
+  {
+   var val = 0;
+   for (var i = 0; i < trackingString.length - 1; i++)
+   {
+    var sChr = trackingString.substring(i, i + 1);
+    var chr = parseInt(sChr, 10);
+    var mul = 0;
+    switch (i % 3)
+    {
+     case 0:
+      mul = chr * 3;
+      break;
+     case 1:
+      mul = chr;
+      break;
+     case 2:
+      mul = chr * 7;
+      break;
+    }
+    val += mul;
+   }
+   var mod = val % 11;
+   if (mod === 10)
+    mod = 0;
+   var sChk = trackingString.substring(trackingString.length - 1, trackingString.length);
+   var chk = parseInt(sChk, 10);
+   if (chk === mod)
+    return true;
+   return false;
+  }
+  if (trackingString.length === 15)
+  {
+   var sum1 = 0;
+   var sum2 = 0;
+   for (var i = trackingString.length - 2; i >= 0; i--)
+   {
+    var sChr = trackingString.substring(i, i + 1);
+    var chr = parseInt(sChr, 10);
+    switch (i % 2)
+    {
+     case 0:
+      sum2 += chr;
+      break;
+     case 1:
+      sum1 += chr;
+    }
+   }
+   sum1 *= 3;
+   var total = sum1 + sum2;
+   var nextDec = Math.ceil(total / 10) * 10;
+   var mod = nextDec - total;
+   var sChk = trackingString.substring(trackingString.length - 1, trackingString.length);
+   var chk = parseInt(sChk, 10);
+   if (chk === mod)
+    return true;
+   return false;
+  }
+  return true;
+ },
+ tpVerifyPackageCarrier: function(carrier, trackingString)
+ {
+  switch (carrier.toLowerCase())
+  {
+   case 'fedex':
+    return TrackPackage_functionLib.tpVerifyPackageFedEx(trackingString);
+    break;
+  }
+  return true;
+ },
  tpGetPackageCarrier: function(trackingString)
  {
   var i;
@@ -208,6 +280,8 @@ var TrackPackage_functionLib =
    var regex = new RegExp(regexURLArray[i][1], "gi");
    if (regex.test(trackingString))
    {
+    if (!TrackPackage_functionLib.tpVerifyPackageCarrier(regexURLArray[i][0], trackingString))
+     continue;
     carrier = regexURLArray[i][0];
     break;
    }
