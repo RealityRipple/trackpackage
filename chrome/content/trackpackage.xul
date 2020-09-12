@@ -4,13 +4,13 @@
  <script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js" />
  <script type="application/x-javascript" src="chrome://trackpackage/content/trackpackage.js" />
  <vbox id="appmenuSecondaryPane">
-  <menuitem label="Tracking History..." insertafter="appmenu_addons" oncommand="TrackPackage_functionLib.tpOpenHistory();" />
+  <menuitem id="app_trackinghistory" label="Tracking History..." insertafter="appmenu_addons" oncommand="TrackPackage_functionLib.tpOpenHistory();" />
  </vbox>
  <menupopup id="menu_ToolsPopup">
-  <menuitem label="Tracking History..." insertafter="devToolsSeparator" oncommand="TrackPackage_functionLib.tpOpenHistory();" />
+  <menuitem id="tools_trackinghistory" label="Tracking History..." insertafter="devToolsSeparator" oncommand="TrackPackage_functionLib.tpOpenHistory();" />
  </menupopup>
  <menupopup id="taskPopup">
-  <menuitem label="Tracking History..." insertbefore="prefSep" oncommand="TrackPackage_functionLib.tpOpenHistory();" />
+  <menuitem id="task_trackinghistory" label="Tracking History..." insertbefore="prefSep" oncommand="TrackPackage_functionLib.tpOpenHistory();" />
  </menupopup>
  <toolbarpalette id="BrowserToolbarPalette">
   <toolbarbutton id="tpButtonMenu" />
