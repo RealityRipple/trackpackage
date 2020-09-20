@@ -12,7 +12,7 @@
                   em:optionsURL="chrome://trackpackage/content/tpPrefDialog.xul"
                   em:updateURL="https://realityripple.com/Software/Mozilla-Extensions/Track-Package/update.rdf"
 				              em:type="2">
-  <em:contributor>Dave Kahler</em:contributor>
+  <em:developer>Dave Kahler</em:developer>
   <em:contributor>Luke Horne</em:contributor>
   <em:contributor>Robert Harmon</em:contributor>
   <em:targetApplication RDF:resource="rdf:#$firefox"/>
