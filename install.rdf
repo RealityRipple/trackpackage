@@ -3,7 +3,7 @@
  <Description about="urn:mozilla:install-manifest">
   <em:name>Track Package</em:name>
   <em:id>{32C0E919-16F4-5571-840D-D3F952999437}</em:id>
-  <em:version>4.7</em:version>
+  <em:version>5.0</em:version>
   <em:type>2</em:type>
   <!-- Firefox -->
   <em:targetApplication>
