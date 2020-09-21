@@ -7,8 +7,7 @@
         height="350"
         onload="return TrackPackage_prefs.tpLoadSettings();"
         ondialogaccept="return TrackPackage_prefs.tpSaveSettings();"
-        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-        xmlns:html="http://www.w3.org/1999/xhtml">
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
  <script type="application/x-javascript" src="chrome://trackpackage/content/functionlib.js" />
  <script type="application/x-javascript" src="chrome://trackpackage/content/tpPrefDialog.js" />
  <tabbox flex="1">
