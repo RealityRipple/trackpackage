@@ -3,7 +3,7 @@
  <Description about="urn:mozilla:install-manifest">
   <em:name>Track Package</em:name>
   <em:id>{32C0E919-16F4-5571-840D-D3F952999437}</em:id>
-  <em:version>5.0</em:version>
+  <em:version>5.1</em:version>
   <em:type>2</em:type>
   <!-- Firefox -->
   <em:targetApplication>
@@ -18,7 +18,7 @@
    <Description>
     <em:id>{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</em:id>
     <em:minVersion>2.2</em:minVersion>
-    <em:maxVersion>2.40</em:maxVersion>
+    <em:maxVersion>2.*</em:maxVersion>
    </Description>
   </em:targetApplication>
   <!-- Thunderbird -->
@@ -34,7 +34,7 @@
    <Description>
     <em:id>{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}</em:id>
     <em:minVersion>25.0a1</em:minVersion>
-    <em:maxVersion>28.*</em:maxVersion>
+    <em:maxVersion>29.*</em:maxVersion>
    </Description>
   </em:targetApplication>
   <em:description>Track Packages from the right-click menu.</em:description>
