@@ -121,7 +121,7 @@ var TrackPackage_prefs =
    var regex = nodes.item(1).value;  
    if (typeof regex === 'undefined' || regex === null)
     regex    = nodes.item(1).getAttribute('value');
-   regexPrefArray[regexPrefArray.length] = '\'' + carrier + '\'' + ',' + '\'' + regex + '\'';
+   regexPrefArray[regexPrefArray.length] = '"' + carrier + '"' + ',' + '"' + regex + '"';
    regexCarrierArray[regexCarrierArray.length] = carrier;
   }
   var regexPref       = regexPrefArray.join(';');
@@ -144,7 +144,7 @@ var TrackPackage_prefs =
     urlBack     = nodes.item(2).getAttribute('value');
    if (typeof carrier === 'undefined' || carrier === null)
     continue;
-   urlPrefArray[urlPrefArray.length] = '\'' + carrier + '\'' + ',' + '\'' + urlFront + '\'' + ',' + '\'' + urlBack + '\'';
+   urlPrefArray[urlPrefArray.length] = '"' + carrier + '"' + ',' + '"' + urlFront + '"' + ',' + '"' + urlBack + '"';
    urlCarrierArray[urlCarrierArray.length] = carrier;
   }
   var urlPref = urlPrefArray.join(';');
@@ -280,7 +280,7 @@ var TrackPackage_prefs =
   var result = filePicker.show();
   if(result === filePicker.returnOK || result === filePicker.returnReplace)
   {
-   var finalXML = '<?xml version=\'1.0\'?>\n\n';
+   var finalXML = '<?xml version="1.0"?>\n\n';
    finalXML += '<trackpackage>\n\n';
    var regexURLArray = TrackPackage_functionLib.tpGetRegexURLArray();
    var i;
@@ -288,12 +288,12 @@ var TrackPackage_prefs =
    {
     if (regexURLArray[i][1] === '')
      continue;
-    finalXML += '\t<regex carrier=\'' + regexURLArray[i][0] + '\' value=\'' + regexURLArray[i][1] + '\' />\n';
+    finalXML += '\t<regex carrier="' + regexURLArray[i][0] + '" value="' + regexURLArray[i][1] + '" />\n';
    }
    finalXML += '\n';
    for (i = 0; i < regexURLArray.length; i++)
    {
-    finalXML += '\t<url carrier=\'' + regexURLArray[i][0] + '\' front=\'' + regexURLArray[i][2] + '\' back=\'' + regexURLArray[i][3] + '\' />\n';
+    finalXML += '\t<url carrier="' + regexURLArray[i][0] + '" front="' + regexURLArray[i][2] + '" back="' + regexURLArray[i][3] + '" />\n';
    }
    finalXML += '\n';
    finalXML += '</trackpackage>\n';
@@ -341,14 +341,14 @@ var TrackPackage_prefs =
    {
     carrier   = node.getAttribute('carrier');
     var value = node.getAttribute('value');
-    regexArray[regexArray.length] = '\'' + carrier + '\',\'' + value + '\'';
+    regexArray[regexArray.length] = '"' + carrier + '","' + value + '"';
    }
    if (name === 'url')
    {
     carrier   = node.getAttribute('carrier');
     var front = node.getAttribute('front');
     var back  = node.getAttribute('back');
-    urlArray[urlArray.length] = '\'' + carrier + '\',\'' + front + '\',\'' + back + '\'';
+    urlArray[urlArray.length] = '"' + carrier + '","' + front + '","' + back + '"';
    }
   }
   var finalRegexString = regexArray.join(';');
